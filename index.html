@@ -1,0 +1,923 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>에듀에이드 PBL 따라하기 · 통합 DB와 발주서</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="trainee">
+
+<nav class="top"><div class="in">
+  <span class="logo">에듀에이드 PBL</span>
+  <a href="#prep">준비</a>
+  <a href="#d1-7">1회차 문제정의</a>
+  <span class="grp">2회차 ▸</span>
+  <a href="#d2-1">설계</a>
+  <a href="#d2-3">적재</a>
+  <a href="#d2-4">손익</a>
+  <a href="#d2-5">조회 뷰</a>
+  <a href="#d2-6">발주서</a>
+  <a href="#d2-7">스크립트</a>
+  <a href="#d2-8">PDF</a>
+  <a href="#help">막힐 때</a>
+  <a href="#mystatus" class="progress" id="progress" title="내 진행 상황 보기"><span class="pbar"><i></i></span><b>0%</b></a>
+</div></nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">AI+PBL · 훈련생용 따라하기</div>
+  <h1>흩어진 시트를 하나로 묶고,<br>버튼 하나로 발주서 만들기</h1>
+  <p>1회차 7~8교시(문제정의)와 2회차 1~8교시(통합 DB · 조회 뷰 · 발주서 · Apps Script)를 다룹니다. 위에서 아래로 순서대로 따라 하세요. 단계마다 <b>✅ 이렇게 나오면 성공</b> 상자의 숫자와 내 화면을 비교합니다.</p>
+  <p><span class="pill">1회차 11.26(목) 16:00~18:00</span><span class="pill">2회차 11.30(월) 09:00~18:00</span><span class="pill gray">장소 사내 701호</span></p>
+</header>
+
+<section class="block">
+  <h2>오늘의 흐름</h2>
+  <div class="flow">
+    <span>① 문제 찾기</span><i>→</i><span>② 표 설계</span><i>→</i><span>③ 넣고 점검</span><i>→</i><span>④ 손익 자동 계산</span><i>→</i><span>⑤ 조회 뷰</span><i>→</i><span>⑥ 발주서 자동 채움</span><i>→</i><span>⑦ 스크립트 입문</span><i>→</i><span>⑧ PDF 일괄 저장</span>
+  </div>
+  <div class="box note"><b>꼭 지킬 약속 3가지</b>
+    1) 고객명·단가·계좌·통장 내역은 AI에 넣지 않습니다. 열 이름과 가상 샘플 몇 줄만 보여 줍니다.<br>
+    2) AI가 만든 수식·코드는 <b>사본</b>에서 먼저 실행하고, 이 페이지의 정답 숫자와 비교합니다.<br>
+    3) 자동으로 나온 결과도 최종 확인은 사람이 합니다.</div>
+</section>
+
+<section class="block" id="mystatus">
+  <h2>내 진행 상황</h2>
+  <div class="meta">단계마다 맨 아래 <b>"이 단계 끝났어요"</b>에 체크하면 그래프가 올라갑니다. 막대를 누르면 그 교시로 이동합니다. 기록은 이 컴퓨터의 브라우저에만 저장됩니다.</div>
+  <div class="pp-total"><div class="pp-total-bar"><i></i></div><div class="pp-total-txt"></div></div>
+  <div id="progress-panel"></div>
+  <div class="pp-actions"><button type="button" id="progress-reset" class="pp-reset">↺ 진행 초기화</button><span class="pp-hint">다른 사람이 쓰던 컴퓨터이거나 처음부터 다시 할 때 누릅니다.</span></div>
+</section>
+
+<!-- ===================== 준비 ===================== -->
+<section class="block" id="prep">
+  <h2>준비 · 실습 파일 열기</h2>
+  <div class="meta">이미 1회차에 열어 둔 사람은 확인만 하고 넘어가세요.</div>
+
+  <div class="step" data-id="p1">
+    <h3><span class="no">준비 1</span>실습 파일 두 개를 구글 시트로 열기</h3>
+    <ol>
+      <li>아래 두 파일을 내려받습니다.<br>
+        ⬇ <a href="practice/에듀에이드_AsIs시트_2026-09_참여자용.xlsx" download>As-Is 파일</a> — 지금 회사가 쓰는 방식의 시트 4개<br>
+        ⬇ <a href="practice/에듀에이드_PBL샘플데이터_2026-09.xlsx" download>PBL 샘플 데이터</a> — 정리된 원본 데이터, 계약·거래처·매입·명세서·정산 5개 탭</li>
+      <li>구글 드라이브 → <span class="menu">＋ 새로 만들기</span> → <span class="menu">파일 업로드</span>로 올립니다.</li>
+      <li>올린 파일을 열고 <span class="menu">파일</span> → <span class="menu">Google Sheets로 저장</span>을 누릅니다.</li>
+      <li>열린 구글 시트에서 <span class="menu">파일</span> → <span class="menu">사본 만들기</span>. <b>앞으로 이 사본으로만 실습합니다.</b></li>
+    </ol>
+    <div class="box note"><b>💡 이 교안에서 부르는 파일 이름</b>
+      <ul>
+        <li><b>As-Is 파일</b> = 이름에 <code class="i">AsIs시트</code>가 들어간 사본. <b>As-Is는 "지금 방식"</b>이라는 뜻입니다. 지금 회사가 손으로 쓰는 시트 4개가 들어 있습니다.</li>
+        <li><b>PBL 샘플 데이터 사본</b> = 이름에 <code class="i">PBL샘플데이터</code>가 들어간 사본. 정리된 원본 데이터입니다.</li>
+        <li>사본을 만들면 이름 끝에 <b>"의 사본"</b>이 붙습니다. 예: <code class="i">에듀에이드_AsIs시트_2026-09_참여자용의 사본</code>. 실습은 이 사본으로만 합니다.</li>
+      </ul></div>
+    <div class="box ok"><b>✅ 이렇게 나오면 성공</b>PBL 샘플 데이터 사본 아래쪽에 <code class="i">README · 계약 · 거래처 · 매입_지출시트 · 삼성명세서 · 정산</code> 탭이 보입니다.</div>
+  </div>
+
+  <div class="step" data-id="p2">
+    <h3><span class="no">준비 2</span>도구 점검</h3>
+    <ul>
+      <li>시트 메뉴 <span class="menu">확장 프로그램</span>에 <b>Apps Script</b>가 보이나요?</li>
+      <li>Claude(claude.ai)에 로그인되나요?</li>
+    </ul>
+    <div class="box warn"><b>⚠ Apps Script가 안 보이면</b>회사 계정에서 막혀 있을 수 있습니다. 바로 강사에게 알려 주세요. Apps Script는 <b>2회차 7~8교시(G·H 단계)</b>에만 씁니다. 그때까지 해결되지 않으면 그 두 교시는 강사가 프로젝터에 띄운 Apps Script 화면을 보며 따라 합니다. 1회차와 2회차 1~6교시는 상관없습니다.</div>
+  </div>
+</section>
+
+<!-- ===================== 1회차 7교시 ===================== -->
+<section class="block" id="d1-7">
+  <h2>1회차 7교시 · 문제 찾기 ① 한 건을 따라가고, 몇 번 다시 쓰는지 센다</h2>
+  <div class="meta">16:00~17:00 · 파일: As-Is 파일 (지금 방식 시트 모음)</div>
+  <div class="box note"><b>🗺 1회차 지도 · 어디에 적고, 어디를 보나</b>
+    <b>적는 곳은 늘 As-Is 파일의 <code class="i">문제정의</code> 탭</b>입니다. 보는 곳만 단계마다 바뀝니다. 단계마다 맨 위 ✏️·👀 두 줄을 먼저 보세요.
+    <div class="tbl"><table>
+      <tr><th>단계</th><th>✏️ 적는 곳 (<code class="i">문제정의</code> 탭)</th><th>👀 보는 곳</th></tr>
+      <tr><td>A-1</td><td>A1 사례 표</td><td>As-Is 파일 › <code class="i">한건추적</code></td></tr>
+      <tr><td>A-2</td><td>A8 입력 횟수 표</td><td>As-Is 파일 › <code class="i">1_</code>~<code class="i">4_</code> 탭 1행 제목</td></tr>
+      <tr><td>A-3</td><td>G1 기록표</td><td>As-Is 파일 › 수식을 넣은 열</td></tr>
+      <tr><td>A-4</td><td>A15 흐름도</td><td>As-Is 파일 › <code class="i">한건추적</code> D열</td></tr>
+      <tr><td>A-4+</td><td>A35 AI 점검표</td><td>Claude 답 + 문제정의 탭 A1·G1</td></tr>
+      <tr><td>A-5 ①</td><td>A41 키 대응표</td><td><b>PBL 샘플 데이터 사본</b> › 계약·매입_지출시트·삼성명세서 <span class="sw">⚠ 파일 바뀜</span></td></tr>
+      <tr><td>A-5 ②</td><td>A22 용어표</td><td>As-Is 파일 › <code class="i">한건추적</code></td></tr>
+      <tr><td>A-6</td><td>A28 성공지표</td><td>강사 화면 (강사가 같은 표에 반 대표값을 적음)</td></tr>
+    </table></div></div>
+
+  <div class="step" data-id="a1">
+    <h3><span class="no">A-1</span>계약 한 건이 지나가는 길 따라가기</h3>
+    <p class="goal">🎯 계약 하나가 수주부터 정산까지 어느 시트를 거치는지, 어디서 끊기는지 봅니다.</p>
+    <div class="where"><div>✏️ <b>적는 곳:</b> As-Is 파일 › <code class="i">문제정의</code> 탭 › A1</div><div>👀 <b>보는 곳:</b> As-Is 파일 › <code class="i">한건추적</code> 탭</div></div>
+    <ol>
+      <li><code class="i">한건추적</code> 탭을 엽니다. 사례 A~D 네 개가 ① 수주 → ② 삼성 발주 → ③ 매입 → ④ 삼성 명세서 → ⑤ 정산 순서로 적혀 있습니다.</li>
+      <li>시트 탭을 하나 새로 만듭니다. 화면 왼쪽 아래 <span class="menu">＋</span>(시트 추가)를 누르고, 새로 생긴 탭 이름을 더블클릭해 <code class="i">문제정의</code>로 바꿉니다. <b>이 탭은 1회차가 끝날 때까지 계속 씁니다.</b></li>
+      <li><code class="i">문제정의</code> 탭의 A1 칸을 클릭하고, 아래 표의 <span class="menu">복사</span> 버튼을 누른 뒤 <kbd>Ctrl</kbd>+<kbd>V</kbd>로 붙여 넣습니다.</li>
+      <li><code class="i">한건추적</code> 탭을 보며 사례마다 빈칸 네 개를 <b>왼쪽부터</b> 채웁니다.
+        <ul>
+          <li><b>문제가 생긴 단계:</b> ①~⑤ 중 어디서 이상해졌나 (사례A는 정상이니 "없음")</li>
+          <li><b>그 단계의 번호(키):</b> 그 단계에서 이 계약을 부르는 번호 (한건추적 탭의 "키" 칸)<br>
+            <b>사례A 줄만 다르게:</b> 문제가 없으니, 대신 ①~⑤를 거치며 번호가 어떻게 바뀌는지 <b>번호 이름을 순서대로</b> 적습니다. 예: <code class="i">계약번호 → 삼성주문번호 → …</code> (실제 번호 값은 안 적어도 됩니다)</li>
+          <li><b>무슨 문제인가:</b> 무엇이 비었거나 다른지, 숫자가 있으면 숫자까지</li>
+          <li><b>알아채려면:</b> 사람이 이 문제를 찾으려면 어느 시트의 무엇을 비교해야 하나</li>
+        </ul>
+      </li>
+    </ol>
+    <div class="code" data-tsv><div class="cap"><span>문제정의 탭 A1에 붙여넣기 (칸이 자동으로 나뉩니다)</span><button class="copy">복사</button></div><pre>사례 | 문제가 생긴 단계 | 그 단계의 번호(키) | 무슨 문제인가 | 사람이 알아채려면 무엇을 봐야 하나
+사례A 정상 |  |  |  |
+사례B 금액 불일치 |  |  |  |
+사례C 주문번호 공란 |  |  |  |
+사례D 매입 기록 없음 |  |  |  | </pre></div>
+    <div class="box ok"><b>✅ 이렇게 나오면 성공</b>사례 B·C·D 세 줄은 네 칸이 모두 채워져 있습니다. 사례A 줄은 "문제가 생긴 단계"에 "없음", 번호 칸에 번호 이름 다섯 개가 순서대로 적혀 있습니다. 문제가 생긴 단계는 사례마다 다릅니다.</div>
+    <div class="box note"><b>💡 볼 곳</b>같은 계약 한 건인데 <b>키</b> 칸의 번호가 계약번호(영업) → 삼성주문번호 → 매입ID(회계) → 다시 삼성주문번호(명세서) → 계산서번호(정산)로 계속 바뀝니다. 이어달리기에서 주자가 바뀌는 것과 같습니다. 바뀔 때 <b>이전 번호와 새 번호를 한 줄에 같이 적어 두는 것이 바통</b>입니다. 새 기록에 이전 번호를 안 적으면 바통을 떨어뜨린 것이라, 그다음 단계에서는 이 계약이 어느 줄인지 찾을 수 없습니다. 그래서 번호가 바뀌는 곳이 <b>끊기기 쉬운 곳</b>입니다.</div>
+  </div>
+
+  <div class="step" data-id="a2">
+    <h3><span class="no">A-2</span>같은 값을 몇 번 다시 쓰는지 세기</h3>
+    <p class="goal">🎯 <b>계약금액</b> 하나가 몇 개 시트에 손으로 다시 입력되는지 찾습니다.</p>
+    <div class="where"><div>✏️ <b>적는 곳:</b> As-Is 파일 › <code class="i">문제정의</code> 탭 › A8</div><div>👀 <b>보는 곳:</b> As-Is 파일 › <code class="i">1_</code>~<code class="i">4_</code> 탭 4개의 1행 제목</div></div>
+    <ol>
+      <li>4개 탭(<code class="i">1_주문현황(영업)</code>, <code class="i">2_계약별손익(회계)</code>, <code class="i">3_매출처·매입처(월합계)</code>, <code class="i">4_현금흐름표</code>)을 차례로 열고, <b>맨 윗줄(1행)에 적힌 제목</b>을 훑어봅니다. 이 제목(열 이름)이 "이 세로줄에는 무엇이 들어 있다"는 이름표입니다. 계약금액이 들어 있을 것 같은 제목을 찾으세요. (이름이 꼭 "계약금액"이 아닐 수도 있습니다)</li>
+      <li>계약금액(또는 그 합계, 입금액)이 들어 있는 열에 형광펜(채우기 색)을 칠합니다.</li>
+      <li>아래 표를 <code class="i">문제정의</code> 탭 A8에 붙여 넣고, 시트마다 빈칸 두 개를 채웁니다. 각 칸은 이렇게 찾습니다.
+        <ul>
+          <li><b>계약금액이 들어 있는 열:</b> 2번에서 형광펜을 칠한 열입니다. <b>열 문자와 1행 제목</b>을 함께 적습니다. 예: <code class="i">G열 계약금액</code>. <code class="i">4_현금흐름표</code>는 B열 "구분"이 <b>입금</b>인 줄의 금액이 계약금액입니다.</li>
+          <li><b>이 시트가 계약을 부르는 번호:</b> 그 시트에서 "이 줄이 어느 계약인지" 알려 주는 칸을 찾습니다. 먼저 <b>맨 왼쪽 A열</b>을 봅니다. 번호가 없으면 이름이나 메모 칸에 무엇이 적혀 있는지 적습니다. 예: <code class="i">A열 계약번호</code>, <code class="i">E열 메모(계산서 T001)</code></li>        </ul>
+      </li>
+    </ol>
+    <div class="code" data-tsv><div class="cap"><span>문제정의 탭 A8에 붙여넣기</span><button class="copy">복사</button></div><pre>시트 | 계약금액이 들어 있는 열 | 이 시트가 계약을 부르는 번호
+1_주문현황(영업) |  |
+2_계약별손익(회계) |  |
+3_매출처·매입처(월합계) |  |
+4_현금흐름표 |  | </pre></div>
+    <div class="box ok"><b>✅ 이렇게 나오면 성공</b>네 줄 모두 두 칸이 채워져 있고, 네 시트 모두에 계약금액이 다시 들어가 있습니다. 계약을 부르는 번호는 시트마다 다릅니다. <b>같은 값을 4번 입력</b>하고 있다는 것이 오늘 풀 문제입니다.</div>
+  </div>
+
+  <div class="step" data-id="a3">
+    <h3><span class="no">A-3</span>숨어 있는 차이·누락 찾기</h3>
+    <p class="goal">🎯 4번씩 손으로 쓰다 보니 생긴 <b>차이</b>(같은 계약인데 금액이 다름)와 <b>누락</b>(있어야 할 기록이 없음)을 수식으로 찾아냅니다.</p>
+    <div class="where"><div>✏️ <b>적는 곳:</b> 수식은 As-Is 파일의 <code class="i">2_</code>·<code class="i">3_</code>·<code class="i">4_</code>·<code class="i">정산</code> 탭, 찾은 것은 As-Is 파일 › <code class="i">문제정의</code> 탭 › G1</div><div>👀 <b>보는 곳:</b> 수식을 넣은 열 (<code class="i">2_</code> G열, <code class="i">3_</code> C열, <code class="i">4_</code> F열, <code class="i">정산</code> I열)</div></div>
+    <p><b>① 주문현황과 계약별손익의 금액 비교</b> — <code class="i">2_계약별손익(회계)</code> 탭 G1에 <code class="i">차이</code>라고 쓰고, G2에 아래 수식을 넣은 뒤 G41까지 채웁니다. (G2 칸 오른쪽 아래 작은 네모를 더블클릭)</p>
+    <div class="code"><div class="cap"><span>2_계약별손익(회계) G2</span><button class="copy">복사</button></div><pre>=D2-'1_주문현황(영업)'!G2</pre></div>
+    <p><b>② 매출처 월합계가 맞는지</b> — <code class="i">3_매출처·매입처(월합계)</code> 탭 C1에 <code class="i">차이</code>라고 쓰고, C2에 아래 수식을 넣어 C13까지 채웁니다.</p>
+    <div class="code"><div class="cap"><span>3_매출처·매입처(월합계) C2</span><button class="copy">복사</button></div><pre>=SUMIFS('1_주문현황(영업)'!G:G,'1_주문현황(영업)'!C:C,A2)-B2</pre></div>
+    <p><b>③·④를 하기 전에: 정산 탭 가져오기</b> — 현금흐름표는 <b>정산</b> 기록과 비교해야 하는데, 정산 탭은 PBL 샘플 데이터 파일에 있습니다. 탭을 복사해 옵니다.</p>
+    <ol>
+      <li><b>PBL 샘플 데이터 사본</b>을 엽니다.</li>
+      <li>아래쪽 <code class="i">정산</code> 탭을 마우스 오른쪽 버튼으로 클릭 → <span class="menu">복사 대상</span> → <span class="menu">기존 스프레드시트</span>.</li>
+      <li>목록에서 As-Is 파일, 즉 이름이 <code class="i">에듀에이드_AsIs시트_2026-09_참여자용의 사본</code>인 파일을 골라 <span class="menu">삽입</span>. (안 보이면 위쪽 검색칸에 <code class="i">AsIs</code> 입력)</li>
+      <li>As-Is 파일로 돌아오면 <code class="i">정산의 사본</code> 탭이 생겨 있습니다. 이름을 더블클릭해 <code class="i">정산</code>으로 바꿉니다.</li>
+    </ol>
+    <p><b>③ 현금흐름표 입금액이 정산과 같은지</b> — <code class="i">4_현금흐름표</code> 탭 F1에 <code class="i">차이</code>라고 쓰고, F2에 아래 수식을 넣은 뒤 F66까지 채웁니다. 입금 줄만 계산하고 출금예정 줄은 빈칸으로 둡니다.</p>
+    <div class="code"><div class="cap"><span>4_현금흐름표 F2</span><button class="copy">복사</button></div><pre>=IF(B2&lt;&gt;"입금","",D2-XLOOKUP(SUBSTITUTE(E2,"계산서 ",""),정산!A:A,정산!F:F))</pre></div>
+    <p><b>④ 정산에 있는 입금이 현금흐름표에 빠지지 않았는지</b> — <code class="i">정산</code> 탭 I1에 <code class="i">현금흐름표에 있나</code>라고 쓰고, I2에 아래 수식을 넣은 뒤 I41까지 채웁니다. 입금이 없는 계산서는 빈칸으로 둡니다.</p>
+    <div class="code"><div class="cap"><span>정산 I2</span><button class="copy">복사</button></div><pre>=IF(F2=0,"",IF(COUNTIF('4_현금흐름표'!E:E,"계산서 "&amp;A2)&gt;0,"있음","누락"))</pre></div>
+    <div class="box note"><b>💡 수식을 말로 읽으면</b>③ "입금 줄이면, 메모의 계산서번호로 정산 탭에서 입금액을 찾아 빼라." ④ "입금된 계산서번호가 현금흐름표 메모에 한 번이라도 있으면 '있음', 없으면 '누락'."</div>
+    <div class="box ok"><b>✅ 이렇게 나오면 성공</b>수식을 넣은 열을 위에서 아래로 훑어봅니다. 아래 개수만큼 찾으면 성공입니다.
+      <div class="tbl"><table>
+        <tr><th></th><th>어느 시트</th><th>어느 열</th><th>무엇을 찾나</th><th>개수</th><th>숫자의 뜻 (기록표 "얼마나"에 적을 말)</th></tr>
+        <tr><td>①</td><td><code class="i">2_계약별손익(회계)</code></td><td>G열</td><td>0이 아닌 숫자</td><td><b>3줄</b></td><td>회계 금액이 주문현황보다 <b>많음</b></td></tr>
+        <tr><td>②</td><td><code class="i">3_매출처·매입처(월합계)</code></td><td>C열</td><td>0이 아닌 숫자</td><td><b>2곳(기관)</b></td><td>월합계가 <b>적음</b> (손으로 더하다 빠뜨림)</td></tr>
+        <tr><td>③</td><td><code class="i">4_현금흐름표</code></td><td>F열</td><td>0이 아닌 숫자 (빈칸은 입금이 아닌 줄이라 무시)</td><td><b>2줄</b></td><td>현금흐름표 입금액이 정산보다 <b>많음</b></td></tr>
+        <tr><td>④</td><td><code class="i">정산</code></td><td>I열</td><td>"누락"이라고 적힌 칸</td><td><b>1건</b></td><td>현금흐름표에 이 입금이 <b>없음</b></td></tr>
+      </table></div>
+      </div>
+    <div class="box note"><b>💡 다 찾았는지 수식으로 세어 보기</b>눈으로 훑다 보면 하나쯤 놓치기 쉽습니다. 아래 칸에 수식을 넣으면 찾아야 할 개수가 나옵니다. 위 표의 개수와 같으면 다 찾은 것입니다.
+      <div class="tbl"><table>
+        <tr><th></th><th>어느 시트의 어느 칸</th><th>넣을 수식</th><th>나와야 할 숫자</th></tr>
+        <tr><td>①</td><td><code class="i">2_계약별손익(회계)</code> I1</td><td><code class="i">=COUNTIF(G2:G41,"&gt;0")+COUNTIF(G2:G41,"&lt;0")</code></td><td>3</td></tr>
+        <tr><td>②</td><td><code class="i">3_매출처·매입처(월합계)</code> G1</td><td><code class="i">=COUNTIF(C2:C13,"&gt;0")+COUNTIF(C2:C13,"&lt;0")</code></td><td>2</td></tr>
+        <tr><td>③</td><td><code class="i">4_현금흐름표</code> H1</td><td><code class="i">=COUNTIF(F2:F66,"&gt;0")+COUNTIF(F2:F66,"&lt;0")</code></td><td>2</td></tr>
+        <tr><td>④</td><td><code class="i">정산</code> K1</td><td><code class="i">=COUNTIF(I2:I41,"누락")</code></td><td>1</td></tr>
+      </table></div>
+      "0보다 큰 칸 수 + 0보다 작은 칸 수"를 세는 수식입니다. 빈칸은 세지 않습니다.</div>
+    <p><b>찾은 것 기록하기</b> — 아래 표를 <code class="i">문제정의</code> 탭 <b>G1</b>에 붙여 넣습니다. (A열 쪽은 다른 표 자리라서 오른쪽 G열에 둡니다.) 첫 줄은 예시로 채워 두었습니다. 나머지 줄을 같은 모양으로 채웁니다.</p>
+    <div class="code" data-tsv><div class="cap"><span>문제정의 탭 G1에 붙여넣기</span><button class="copy">복사</button></div><pre>번호 | 어느 시트 | 몇 행 | 무엇이 다른가 | 얼마나
+① | 2_계약별손익(회계) | 7행 | 계약 2026-09-006 금액이 주문현황과 다름 | 10,000원 많음
+① |  |  |  |
+① |  |  |  |
+② |  |  |  |
+② |  |  |  |
+③ |  |  |  |
+③ |  |  |  |
+④ |  |  |  | </pre></div>
+    <ul>
+      <li><b>어느 시트 · 몇 행:</b> 0이 아닌 숫자(또는 "누락")가 나온 시트 이름과 그 줄의 행 번호(왼쪽 회색 숫자)</li>
+      <li><b>무엇이 다른가:</b> 그 줄의 계약번호·기관명·계산서번호를 함께 적습니다. ①은 회계 시트에 계약번호가 없으니 <b>같은 행 번호의 <code class="i">1_주문현황(영업)</code> A열</b>에서 계약번호를 봅니다. ②는 기관명, ③④는 계산서번호(T로 시작)</li>
+      <li><b>얼마나:</b> 수식이 보여 준 숫자에 위 ✅ 표의 <b>"숫자의 뜻"</b>을 붙여 적습니다. 예: <code class="i">10,000원 많음</code>. ②는 화면에 + 숫자가 나와도 월합계가 <b>적은</b> 것입니다(예: <code class="i">○○원 적음</code>). ④는 "누락"과 빠진 금액(정산 탭 F열)</li>
+    </ul>
+    <div class="box warn"><b>⚠ 칸 맨 앞에 <code class="i">+</code>, <code class="i">-</code>, <code class="i">=</code>를 쓰지 마세요</b>구글 시트는 이 기호로 시작하면 수식으로 알아듣습니다. <code class="i">+10,000</code>처럼 적으면 <code class="i">#ERROR!</code>가 납니다. 이미 났다면 그 칸을 지우고 <code class="i">10,000원 많음</code>처럼 다시 적으세요.</div>
+    <div class="box warn"><b>⚠ 생각해 볼 것</b>①의 수식은 "같은 행 번호끼리" 비교합니다. 회계 시트에 <b>계약번호가 없어서</b> 행 순서로만 맞출 수 있기 때문입니다. 누가 정렬 한 번만 바꿔도 이 비교는 무너집니다. 그래서 공통 키가 필요합니다.</div>
+    <div class="box note"><b>💡 차이를 찾았다고 어느 쪽이 틀렸는지 아는 건 아닙니다</b>수식은 "두 곳의 숫자가 다르다", "있어야 할 게 없다"까지만 알려 줍니다. <b>어느 쪽이 맞는지</b>는 기준이 되는 원본과 대조해야 알 수 있습니다. 그런데 지금 시트들에는 "이게 원본"이라고 정해진 곳이 없습니다. 같은 값을 네 군데에 따로 쓰기 때문입니다. 2회차에 <b>한 번만 입력하는 원본(DB)</b>을 만드는 이유가 바로 이것입니다.</div>
+  </div>
+</section>
+
+<!-- ===================== 1회차 8교시 ===================== -->
+<section class="block" id="d1-8">
+  <h2>1회차 8교시 · 문제 찾기 ② 업무 흐름도와 키 정리, 성공지표</h2>
+  <div class="meta">17:00~18:00 · 오늘 만든 것이 2회차 설계의 출발점입니다</div>
+
+  <div class="step" data-id="a4">
+    <h3><span class="no">A-4</span>업무 흐름도 v0.1</h3>
+    <p class="goal">🎯 우리 회사 일이 어떤 순서로, 어떤 시트에서, 누구 손으로 흘러가는지 한 장으로 정리합니다.</p>
+    <div class="where"><div>✏️ <b>적는 곳:</b> As-Is 파일 › <code class="i">문제정의</code> 탭 › A15</div><div>👀 <b>보는 곳:</b> As-Is 파일 › <code class="i">한건추적</code> 탭 D열 "키"</div></div>
+    <ol>
+      <li><code class="i">문제정의</code> 탭의 A15 칸을 클릭하고, 아래 표의 <span class="menu">복사</span> 버튼을 누른 뒤 <kbd>Ctrl</kbd>+<kbd>V</kbd>로 붙여 넣습니다.</li>
+      <li><b>맨 오른쪽 "이때 쓰는 번호" 칸을 채웁니다.</b> ① 수주 줄만 채워져 있습니다. <code class="i">한건추적</code> 탭을 열고 <b>사례A 다섯 줄의 D열 "키"</b>를 봅니다. 흐름도는 4단계, 한건추적은 5단계라서 아래처럼 짝을 맞춥니다. 번호가 두 개면 둘 다 적습니다.
+        <div class="tbl"><table>
+          <tr><th>흐름도 단계</th><th>한건추적에서 볼 줄</th></tr>
+          <tr><td>② 삼성 발주</td><td>② 삼성 발주</td></tr>
+          <tr><td>③ 매입·배송</td><td>③ 매입(회계)</td></tr>
+          <tr><td>④ 정산</td><td>④ 삼성 명세서 <b>와</b> ⑤ 정산 (두 줄 다)</td></tr>
+        </table></div>
+      </li>
+      <li>내가 표를 읽고 <b>실제 업무와 다른 곳</b>(하는 일, 시트 이름, 담당)을 고칩니다.</li>
+      <li>우리 회사에 <b>표에 없는 단계</b>가 있으면(예: 납품 후 검수 확인, 견적·입찰 서류 준비) 새 줄로 추가합니다.
+        <ul>
+          <li>그 단계가 들어갈 자리 바로 아래 줄의 <b>행 번호</b>(왼쪽 회색 숫자)를 오른쪽 클릭 → <span class="menu">위에 1행 삽입</span>을 누릅니다. 예: ②와 ③ 사이라면 ③ 줄의 행 번호를 오른쪽 클릭합니다.</li>
+          <li>생긴 빈 줄에 단계를 적습니다.</li>
+          <li><b>2줄까지만</b> 추가합니다. 더 늘리면 다음 A-5에서 A22에 붙일 표가 추가한 줄을 덮어씁니다.</li>
+        </ul>
+      </li>
+    </ol>
+    <div class="code" data-tsv><div class="cap"><span>문제정의 탭 A15에 붙여넣기</span><button class="copy">복사</button></div><pre>단계 | 하는 일 | 쓰는 문서·시트 | 담당 | 이때 쓰는 번호
+① 수주 | S2B·입찰·오픈마켓·직거래로 계약 확정 | 주문현황(계약 시트) | 영업 | 계약번호
+② 삼성 발주 | 계약 건을 삼성에 주문, 삼성 주문번호 받음 | 발주서 | 영업·상품 |
+③ 매입·배송 | 삼성에서 매입, 인도처로 직송, 송장 확인 | 지출 시트 | 회계·영업 |
+④ 정산 | 삼성 명세서 대조, 수요기관에 세금계산서 발행·입금 확인 | 삼성 명세서, 정산 시트 | 회계·자금 | </pre></div>
+    <div class="box ok"><b>✅ 이렇게 나오면 성공</b>네 줄 모두 "이때 쓰는 번호" 칸이 채워져 있고, 줄마다 번호가 어떻게 바뀌는지 한눈에 보입니다.</div>
+    <div class="box note"><b>💡 팁</b>표는 예시입니다. 실제 업무와 다른 곳은 내가 바로 고칩니다. 정답보다 <b>우리 회사 실제</b>가 중요합니다. 이 표는 다음 단계(A-4+)에서 Claude에게 그대로 보여 줍니다.</div>
+  </div>
+
+  <div class="step" data-id="a4b">
+    <h3><span class="no">A-4+</span>Claude에게 흐름도 점검받기</h3>
+    <p class="goal">🎯 내가 만든 흐름도를 AI에게 보여 주고, 끊기기 쉬운 곳을 짚어 달라고 합니다. 7교시에 손으로 찾은 것과 비교합니다.</p>
+    <div class="where"><div>✏️ <b>적는 곳:</b> As-Is 파일 › <code class="i">문제정의</code> 탭 › A35</div><div>👀 <b>보는 곳:</b> Claude 답 + <code class="i">문제정의</code> 탭의 A1 표·G1 기록표</div></div>
+    <ol>
+      <li>아래 프롬프트를 복사해 Claude에 붙여 넣습니다. <b>아직 보내지 마세요.</b></li>
+      <li><code class="i">문제정의</code> 탭에서 방금 채운 흐름도 표를 <b>A15부터 E19까지</b> 드래그해 복사합니다. (줄을 추가했다면 E20 또는 E21까지)</li>
+      <li>프롬프트 맨 아래 <code class="i">(여기에 흐름도 표 붙여 넣기)</code> 자리를 지우고 Ctrl+V로 붙여 넣은 뒤 보냅니다.</li>
+    </ol>
+    <div class="box warn"><b>⚠️ 보내기 전 확인</b>표에 고객명·기관명·금액·계좌를 적어 넣었다면 지우고 보냅니다. 단계 이름, 하는 일, 시트 이름, 번호 종류만 있으면 됩니다.</div>
+    <div class="code"><div class="cap"><span>Claude 프롬프트</span><button class="copy">복사</button></div><pre>우리 회사 업무 흐름을 점검하려고 합니다.
+[상황] 학교·기관에 삼성 전자제품을 납품하는 회사입니다. 같은 계약 한 건을 영업은 계약번호로, 삼성 발주와 명세서는 삼성주문번호로, 회계는 매입ID로, 정산은 계산서번호로 부릅니다.
+[입력] 아래는 우리가 정리한 업무 흐름표입니다. 칸은 "단계, 하는 일, 쓰는 문서·시트, 담당, 이때 쓰는 번호" 순서입니다.
+[원하는 결과] 아래 세 가지를 표 하나로 짧게 짚어 주세요. 칸은 "구분, 단계, 무엇이 문제인가, 왜 그런가"로 하고, 구분마다 중요한 것 3줄 이내로 써 주세요.
+1) 번호가 바뀌어 끊기기 쉬운 곳 (어느 단계에서 어떤 번호가 어떤 번호로 바뀌는지)
+2) 빠져 있을 수 있는 단계
+3) 사람이 손이나 눈으로 확인하는 곳
+[금지] 표에 없는 사실을 지어내지 마세요. 확실하지 않으면 "확인 필요"라고 적어 주세요. 어려운 용어 없이 초보자도 알 수 있게 써 주세요.
+
+(여기에 흐름도 표 붙여 넣기)</pre></div>
+    <p>AI 답을 읽고, 아래 표를 <code class="i">문제정의</code> 탭 A35에 붙여 넣어 세 줄을 채웁니다.</p>
+    <ul>
+      <li><b>AI가 짚은 곳:</b> AI 답은 열 줄이 넘을 수 있습니다. 구분 1)·2)·3)에서 <b>하나씩</b> 골라 짧게 옮겨 적습니다.</li>
+      <li><b>7교시에 우리도 찾았나:</b> 같은 탭의 <b>A1 표</b>(A-1에서 찾은 끊기는 곳)와 <b>G1 기록표</b>(A-3에서 찾은 차이·누락)를 보고, 겹치면 O, 없으면 X.</li>
+      <li><b>실제로 맞나:</b> 우리 회사 일과 시트를 아는 내가 판단합니다. 맞으면 O, 틀리면 X.</li>
+    </ul>
+    <div class="code" data-tsv><div class="cap"><span>문제정의 탭 A35에 붙여넣기</span><button class="copy">복사</button></div><pre>AI가 짚은 곳 | 7교시에 우리도 찾았나 (O/X) | 실제로 맞나 (훈련생 확인) | 메모
+ |  |  |
+ |  |  |
+ |  |  | </pre></div>
+    <div class="box ok"><b>✅ 이렇게 나오면 성공</b>AI 답에 "삼성 발주 단계에서 계약번호가 삼성주문번호로 바뀐다", "매입ID·계산서번호로 다시 바뀐다", "명세서 대조와 입금 확인을 사람이 눈으로 한다" 같은 내용이 있고, 그 가운데 7교시에 찾은 것과 겹치는 곳에 O를 표시했습니다.</div>
+    <div class="box note"><b>💡 AI 답은 그대로 믿지 않습니다</b>AI는 우리 회사를 모릅니다. "빠진 단계"로 짚은 것(예: 납품 확인, 반품)이 실제로 있는 일인지는 우리 회사 일을 아는 내가 판단합니다. 틀린 지적은 "실제로 맞나" 칸에 X로 적으면 됩니다. 이 습관은 2회차 B-2·B-3에서 그대로 씁니다.</div>
+  </div>
+
+  <div class="step" data-id="a5">
+    <h3><span class="no">A-5</span>키 대응표와 용어 정리표</h3>
+    <p class="goal">🎯 영업이 부르는 번호와 회계가 부르는 번호를 어떻게 이을지 적습니다.</p>
+    <div class="where"><div>✏️ <b>적는 곳:</b> As-Is 파일 › <code class="i">문제정의</code> 탭 › A41</div><div>👀 <b>보는 곳:</b> <b>PBL 샘플 데이터 사본</b> › <code class="i">계약</code>·<code class="i">매입_지출시트</code>·<code class="i">삼성명세서</code> 탭</div><div class="sw">⚠ 파일이 바뀝니다. 브라우저 탭 두 개를 열어 두고, PBL 샘플에서 보고 As-Is 파일에 적습니다. 빈칸 세는 수식은 PBL 샘플 쪽 탭에 넣습니다.</div></div>
+    <p><b>① 키 대응표</b> — 아래 표를 <code class="i">문제정의</code> 탭 <b>A41</b>에 붙여 넣고 "답" 칸을 채웁니다. 이번에는 <b>PBL 샘플 데이터 사본</b>(정리된 원본 파일)을 열어서 봅니다. "어디서 찾나" 칸이 힌트입니다.</p>
+    <div class="code" data-tsv><div class="cap"><span>문제정의 탭 A41에 붙여넣기</span><button class="copy">복사</button></div><pre>질문 | 답 | 어디서 찾나 (힌트)
+계약번호와 삼성주문번호가 같은 줄에 함께 있는 탭은? (두 곳) |  | PBL 샘플의 탭들을 열어 1행 제목에 두 이름이 모두 있는 탭 찾기
+그중 계약 탭에서 삼성주문번호가 빈 계약은 몇 건이고, 왜 비었나? |  | 계약 탭 K열(삼성주문번호) 빈칸 세기 → 빈 줄의 품명 칸 읽기
+매입_지출시트에서 삼성주문번호가 빈 줄은 몇 건인가? 위와 개수가 같나? |  | 매입_지출시트 C열 빈칸 세기 → 위 답과 비교
+인도처코드는 어느 탭과 어느 탭에 함께 있나? |  | 1행 제목에 "인도처코드"가 있는 탭 찾기</pre></div>
+    <div class="box note"><b>💡 빈칸 세는 법</b>빈 칸에 아래 수식을 넣으면 빈칸 개수가 바로 나옵니다. <code class="i">COUNTBLANK</code> = "빈칸을 세라"는 뜻입니다.
+      <div class="tbl"><table>
+        <tr><th>어느 탭의 어느 칸</th><th>넣을 수식</th><th>무엇을 세나</th></tr>
+        <tr><td><code class="i">계약</code> S1</td><td><code class="i">=COUNTBLANK(K2:K41)</code></td><td>K열 삼성주문번호 빈칸 (계약 40줄)</td></tr>
+        <tr><td><code class="i">매입_지출시트</code> N1</td><td><code class="i">=COUNTBLANK(C2:C39)</code></td><td>C열 삼성주문번호 빈칸 (매입 38줄)</td></tr>
+      </table></div>
+      빈 줄이 어느 계약인지 보려면 <code class="i">계약</code> 탭 <b>K열</b>을 2행부터 아래로 내려가며 빈칸을 찾고, 같은 줄의 <b>A열(계약번호)</b>과 <b>G열(품명)</b>을 읽습니다.</div>
+
+    <div class="where"><div>✏️ <b>적는 곳:</b> As-Is 파일 › <code class="i">문제정의</code> 탭 › A22</div><div>👀 <b>보는 곳:</b> 다시 As-Is 파일 › <code class="i">한건추적</code> 탭</div></div>
+    <p><b>② 용어 정리표</b> — 아래 표를 <code class="i">문제정의</code> 탭 <b>A22</b>에 붙여 넣습니다. 위 두 줄(계약번호, 삼성 주문번호)은 오늘 본 내용으로 미리 채워 두었으니 읽어만 봅니다. <b>아래 두 줄(인도처 코드, 미매칭)의 "뜻" 칸</b>을 채웁니다. 두 줄 모두 <b>As-Is 파일 <code class="i">한건추적</code> 탭</b>을 보고 채웁니다.</p>
+    <div class="code" data-tsv><div class="cap"><span>문제정의 탭 A22에 붙여넣기</span><button class="copy">복사</button></div><pre>용어 | 뜻(내 말로) | 쓰는 시트 | 헷갈리는 점
+계약번호 | 영업이 계약 한 건마다 붙이는 번호 (예: 2026-09-001) | 주문현황, 계약, 매입_지출시트, 정산 | As-Is 파일 2_계약별손익(회계) 탭에는 이 번호가 없음
+삼성 주문번호 | 삼성에 발주하면 삼성이 주는 번호 (예: SS2026090101) | 계약, 매입_지출시트, 삼성명세서, As-Is 파일 2_계약별손익(회계) | 타사 제품은 번호가 없음. 삼성 제품인데 빈 줄도 있음(011·012)
+인도처 코드 |  |  |
+미매칭 |  |  | </pre></div>
+    <ul>
+      <li><b>뜻(내 말로) — 꼭 채우기:</b> 사전 뜻이 아니라, 오늘 본 것을 바탕으로 <b>한 문장</b>으로. 예시 값을 하나 붙이면 더 좋습니다.</li>
+      <li><b>인도처 코드:</b> As-Is 파일 <code class="i">한건추적</code> 탭에서 사례A의 <b>② 삼성 발주</b> 줄 "내용" 칸(<code class="i">인도처코드 D204</code>)을 보고 뜻을 짐작합니다.</li>
+      <li><b>쓰는 시트 · 헷갈리는 점 — 선택:</b> 시간이 남으면 채웁니다. 쓰는 시트는 키 대응표 답을 그대로 써도 됩니다.</li>
+      <li><b>미매칭</b>은 처음 보는 말입니다. "매칭 = 짝을 맞춘다"는 뜻입니다. 그러면 <b>미</b>매칭은? 한건추적 사례 C·D를 떠올리며 적어 보세요. 3회차에 다시 나옵니다.</li>
+    </ul>
+    <div class="box ok"><b>✅ 이렇게 나오면 성공</b>키 대응표 네 줄의 "답"이 모두 채워져 있습니다. 용어표 <b>인도처 코드·미매칭 두 줄의 "뜻"</b>이 채워져 있습니다. (미매칭의 "쓰는 시트"를 채운다면 <code class="i">아직 없음(3회차)</code>.) 두 번째·세 번째 질문의 개수가 <b>서로 다르게</b> 나왔다면 제대로 찾은 것입니다.</div>
+  </div>
+
+  <div class="step" data-id="a6">
+    <h3><span class="no">A-6</span>성공지표 정하기</h3>
+    <p class="goal">🎯 3회차에 "얼마나 좋아졌나"를 말할 수 있도록 지금 모습을 적어 둡니다. 시간을 정확히 잴 필요는 없습니다. <b>체감</b>이면 충분합니다.</p>
+    <div class="where"><div>✏️ <b>적는 곳:</b> As-Is 파일 › <code class="i">문제정의</code> 탭 › A28</div><div>👀 <b>보는 곳:</b> 강사 화면 — 강사가 자기 시트의 같은 표(문제정의 탭 A28)에 반 전체가 정한 값을 적어 보여 줍니다</div></div>
+    <p>아래 표를 <code class="i">문제정의</code> 탭 <b>A28</b>에 붙여 넣습니다. 위 두 줄은 오늘 확인한 값으로 채워 두었습니다. 아래 두 줄은 강사가 묻는 질문에 손을 들어 <b>반 전체가 함께 정한 값</b>을 "지금" 칸에 적습니다.</p>
+    <div class="code" data-tsv><div class="cap"><span>문제정의 탭 A28에 붙여넣기</span><button class="copy">복사</button></div><pre>지표 | 지금 | 바뀔 모습
+계약금액 입력 횟수 | 4회 | 1회 (2회차 통합 DB)
+차이·누락 찾는 방법 | 눈으로 대조 | 수식이 자동 표시 (2회차 점검 탭)
+발주서 1건 만드는 시간 | (체감) | 계약번호만 고르면 PDF (2회차 8교시)
+월말 명세서 대조 시간 | (체감) | 버튼 한 번으로 대조 (3회차)</pre></div>
+    <ul>
+      <li><b>지금 (체감):</b> "10분쯤", "반나절"처럼 대략 적습니다. 해 본 적 없는 일이면 반에서 정한 값을 그대로 적습니다.</li>
+    </ul>
+    <div class="box ok"><b>✅ 오늘 끝낼 것</b><code class="i">문제정의</code> 탭에 사례 표, 4번 입력 표, 찾은 차이·누락, 흐름도, AI 점검 표, 키 대응표, 용어표, 성공지표가 들어 있으면 1회차 완료입니다.</div>
+  </div>
+</section>
+
+<!-- ===================== 2회차 1·2교시 ===================== -->
+<section class="block" id="d2-1">
+  <h2>2회차 1·2교시 · 데이터 모델링: 표를 어떻게 나누고 이을까</h2>
+  <div class="meta">09:00~11:00 · 파일: PBL 샘플 데이터 사본</div>
+
+  <div class="step" data-id="b1">
+    <h3><span class="no">B-1</span>우리 회사 설계안 받아서 맞는지 확인하기</h3>
+    <p class="goal">🎯 1회차 문제("같은 계약을 시트마다 다른 번호로 부르고, 금액을 네 번 옮겨 적는다")를 풀려면 <b>한 번만 적고, 나머지는 번호로 찾아오게</b> 해야 합니다. 그 바탕이 되는 <b>설계안</b>을 받아서, 정말 맞는지 직접 확인합니다.</p>
+    <div class="where"><div>✏️ <b>적는 곳:</b> PBL 샘플 데이터 사본 › <code class="i">설계</code> 탭 (새로 만듦) › F·G·H열에 O/X</div><div>👀 <b>보는 곳:</b> 같은 파일 › <code class="i">계약</code>·<code class="i">거래처</code>·<code class="i">매입_지출시트</code>·<code class="i">삼성명세서</code>·<code class="i">정산</code> 탭의 2행 + <code class="i">설계</code> 탭 I·J·K열(확인 수식 결과)</div></div>
+    <div class="box note"><b>💡 먼저 학교로 이해하기</b>학교에 <b>학생 명부</b>(학번·이름·반)와 <b>성적표</b>(시험번호·학번·점수)가 있다고 해 봅시다.
+      <div class="tbl"><table>
+        <tr><th>설계안의 칸</th><th>뜻</th><th>학생 명부</th><th>성적표</th></tr>
+        <tr><td>한 줄은 무엇 한 건?</td><td>표 한 줄이 무엇 하나를 적은 것인가</td><td>학생 1명</td><td>시험 1번</td></tr>
+        <tr><td>기본 키</td><td>줄마다 다른 번호 (반 번호처럼 한 줄을 딱 찾음)</td><td>학번</td><td>시험번호</td></tr>
+        <tr><td>연결 키</td><td>두 표에 똑같이 적힌 번호 (다리)</td><td>학번</td><td>학번</td></tr>
+        <tr><td>잇는 상대 탭</td><td>그 번호가 또 적힌 표 (다리 건너편)</td><td>성적표</td><td>학생 명부</td></tr>
+      </table></div>
+      성적표에는 이름이 없지만, 학번을 보고 학생 명부에서 이름을 찾아올 수 있습니다. 그래서 이름을 두 번 적을 필요가 없습니다. 우리 회사 탭 5개도 이렇게 번호로 이어 줍니다.</div>
+    <ol>
+      <li><b>PBL 샘플 데이터 사본</b>을 엽니다. 왼쪽 아래 <span class="menu">＋</span>로 새 탭을 만들고, 탭 이름을 더블클릭해 <code class="i">설계</code>로 바꿉니다.</li>
+      <li>아래 <b>설계안</b>을 <code class="i">설계</code> 탭 <b>A1</b>에 붙여 넣습니다. A~E열은 다 채워져 있고, F·G·H열(확인 칸)은 계약 줄만 예시로 O가 적혀 있습니다.</li>
+      <li>아래 <b>확인 수식</b>을 <code class="i">설계</code> 탭 <b>I1</b>에 붙여 넣습니다. I·J·K열에 확인용 숫자와 글자가 나옵니다.</li>
+      <li>거래처·매입_지출시트·삼성명세서·정산 네 줄을 확인 ①②③ 순서로 확인하고, 맞으면 <code class="i">O</code>, 다르면 <code class="i">X</code>를 적습니다.</li>
+    </ol>
+    <div class="code" data-tsv><div class="cap"><span>설계 탭 A1에 붙여넣기 (설계안)</span><button class="copy">복사</button></div><pre>탭 | 한 줄은 무엇 한 건? | 줄마다 다른 번호(기본 키) | 다른 탭과 잇는 번호(연결 키) | 잇는 상대 탭 | ① 한 줄 맞나 | ② 기본 키 맞나 | ③ 연결 키 맞나
+계약 | 계약 1건 | 계약번호 | 계약번호 / 삼성주문번호 | 매입_지출시트·정산 / 매입_지출시트·삼성명세서 | O | O | O
+거래처 | 거래처 1곳 | 거래처ID | 거래처ID | 매입_지출시트 |  |  |
+매입_지출시트 | 매입 1건 | 매입ID | 계약번호 / 삼성주문번호 / 거래처ID | 계약·정산 / 계약·삼성명세서 / 거래처 |  |  |
+삼성명세서 | 삼성 주문 1건 | 삼성주문번호 | 삼성주문번호 | 계약·매입_지출시트 |  |  |
+정산 | 세금계산서 1장 | 계산서번호 | 계약번호 | 계약·매입_지출시트 |  |  | </pre></div>
+    <div class="code" data-tsv><div class="cap"><span>설계 탭 I1에 붙여넣기 (확인 ②③용 수식)</span><button class="copy">복사</button></div><pre>A열 서로 다른 번호 수 | 줄 수 | ③ 다리 있나
+=COUNTUNIQUE(계약!A2:A41) | =COUNTA(계약!A2:A41) | =IF(AND(COUNTIF(매입_지출시트!1:1,"계약번호")>0,COUNTIF(정산!1:1,"계약번호")>0,COUNTIF(매입_지출시트!1:1,"삼성주문번호")>0,COUNTIF(삼성명세서!1:1,"삼성주문번호")>0),"있음","없음")
+=COUNTUNIQUE(거래처!A2:A13) | =COUNTA(거래처!A2:A13) | =IF(COUNTIF(매입_지출시트!1:1,"거래처ID")>0,"있음","없음")
+=COUNTUNIQUE(매입_지출시트!A2:A39) | =COUNTA(매입_지출시트!A2:A39) | =IF(AND(COUNTIF(계약!1:1,"계약번호")>0,COUNTIF(정산!1:1,"계약번호")>0,COUNTIF(계약!1:1,"삼성주문번호")>0,COUNTIF(삼성명세서!1:1,"삼성주문번호")>0,COUNTIF(거래처!1:1,"거래처ID")>0),"있음","없음")
+=COUNTUNIQUE(삼성명세서!A2:A36) | =COUNTA(삼성명세서!A2:A36) | =IF(AND(COUNTIF(계약!1:1,"삼성주문번호")>0,COUNTIF(매입_지출시트!1:1,"삼성주문번호")>0),"있음","없음")
+=COUNTUNIQUE(정산!A2:A41) | =COUNTA(정산!A2:A41) | =IF(AND(COUNTIF(계약!1:1,"계약번호")>0,COUNTIF(매입_지출시트!1:1,"계약번호")>0),"있음","없음")</pre></div>
+    <p><b>확인하는 법</b> (거래처 줄 = <code class="i">설계</code> 탭 3행으로 예를 듭니다)</p>
+    <div class="tbl"><table>
+      <tr><th>확인</th><th>무엇을 하나</th><th>거래처 줄 예</th><th>적는 칸</th></tr>
+      <tr><td>① 한 줄 맞나</td><td>그 탭을 열어 <b>2행</b>을 읽고, B열 말("○○ 1건")이 맞는지 봅니다.</td><td><code class="i">거래처</code> 탭 2행 = 거래처 한 곳의 이름·계좌·담당자 → "거래처 1곳" 맞음</td><td>F3에 O</td></tr>
+      <tr><td>② 기본 키 맞나</td><td>같은 줄 <b>I열과 J열 숫자</b>가 같은지 봅니다. I = A열에 서로 다른 번호가 몇 종류, J = 줄이 몇 개. <b>같으면</b> 번호가 겹치는 줄이 없다는 뜻이라 기본 키가 맞습니다.</td><td>I3 = 12, J3 = 12 → 같음</td><td>G3에 O</td></tr>
+      <tr><td>③ 연결 키 맞나</td><td>같은 줄 <b>K열</b>을 봅니다. 수식이 E열 상대 탭의 1행 제목에서 D열 연결 키 이름을 대신 찾아 줍니다. <b>"있음"</b>이면 다리가 정말 있는 것입니다.</td><td>K3 = 있음 (매입_지출시트 1행에 거래처ID가 있음)</td><td>H3에 O</td></tr>
+    </table></div>
+    <div class="box note"><b>💡 ②가 왜 "같으면 맞다"인가</b>출석부 검사와 같습니다. 교실에 학생이 38명(J열)인데 번호표도 38종류(I열)면 번호가 겹치는 학생이 없어서, 번호만 불러도 한 명을 딱 찾습니다. 반대로 <code class="i">매입_지출시트</code> D열 거래처ID는 38줄에 7종류뿐입니다(같은 거래처에서 여러 번 샀기 때문). "V001!" 하고 부르면 23줄이 손을 듭니다. 그래서 거래처ID는 매입_지출시트의 기본 키가 아니라, 거래처 탭으로 건너가는 <b>연결 키</b>입니다.</div>
+    <div class="box ok"><b>✅ 이렇게 나오면 성공</b><code class="i">설계</code> 탭 F2:H6에 O가 15개 있습니다(계약 줄 예시 3개 + 내가 확인한 12개). I열과 J열 숫자가 다섯 줄 모두 같고(40·40, 12·12, 38·38, 35·35, 40·40), K열이 모두 "있음"입니다.</div>
+    <div class="box warn"><b>⚠ X가 나왔다면</b>설계안이 틀렸을 수도, 내가 다른 탭을 봤을 수도 있습니다. 옆 사람과 같은 칸을 함께 보고, 그래도 X면 강사에게 알려 주세요. B-3에서 AI 의견과 함께 다시 확인합니다.</div>
+  </div>
+
+  <div class="step" data-id="b2">
+    <h3><span class="no">B-2</span>Claude에게 테이블 구조 초안 받기</h3>
+    <p class="goal">🎯 같은 질문을 AI에게도 해서 <b>AI의 초안</b>을 받아 둡니다. 설계안과 비교하는 것은 다음 B-3에서 합니다.</p>
+    <div class="where"><div>✏️ <b>적는 곳:</b> 없음 (시트에 적지 않습니다. AI 답을 받아 두기만 합니다)</div><div>👀 <b>보는 곳:</b> Claude 대화창 (새 브라우저 탭)</div></div>
+    <ol>
+      <li>브라우저에서 새 탭을 열고(<kbd>Ctrl</kbd>+<kbd>T</kbd>) <b>claude.ai</b>에 들어갑니다. 시트 탭은 닫지 않습니다.</li>
+      <li>왼쪽 위 <span class="menu">새 채팅</span>(＋)을 눌러 빈 대화를 엽니다.</li>
+      <li>아래 프롬프트의 <span class="menu">복사</span> 버튼을 누르고, 대화 입력칸을 클릭한 뒤 <kbd>Ctrl</kbd>+<kbd>V</kbd>로 붙여 넣습니다.</li>
+      <li><kbd>Enter</kbd>로 보냅니다. 답이 다 나올 때까지 기다립니다.</li>
+      <li><b>이 대화창은 닫지 마세요.</b> B-3에서 다시 봅니다.</li>
+    </ol>
+    <p>프롬프트에는 <b>열 이름만</b> 들어 있습니다. 기관명·금액·계좌 같은 실제 값은 없어서 회사 정보가 나가지 않습니다.</p>
+    <div class="code"><div class="cap"><span>Claude 프롬프트</span><button class="copy">복사</button></div><pre>구글 스프레드시트로 만드는 업무 DB의 테이블 구조를 설계하려고 합니다.
+[상황] 학교·기관에 삼성 전자제품을 납품하는 회사입니다. 영업은 계약번호로, 회계는 삼성주문번호로 같은 계약을 따로 관리합니다.
+[입력] 아래 5개 시트의 열 이름입니다.
+- 계약: 계약번호, 계약일, 수요기관, 지역, 채널, 모델명, 품명, 수량, 계약단가, 계약금액, 삼성주문번호, 인도처코드, 영업담당, 납품기한
+- 거래처: 거래처ID, 거래처명, 유형, 사업자번호, 담당자, 연락처, 계좌, 결제조건
+- 매입_지출시트: 매입ID, 계약번호, 삼성주문번호, 거래처ID, 모델명, 수량, 매입단가, 매입금액, 매입일, 지출메모, 택배사, 송장번호
+- 삼성명세서: 삼성주문번호, 모델명, 수량, 단가, 금액, 인도처명, 인도처코드, 출고일, 상태
+- 정산: 계산서번호, 계약번호, 발행일, 발행금액, 입금일, 입금액, 미수잔액, 상태
+[원하는 결과]
+1) 표 하나로 보여 주세요. 칸은 꼭 이 순서로: 탭 | 한 줄은 무엇 한 건? | 줄마다 다른 번호(기본 키) | 다른 탭과 잇는 번호(연결 키) | 잇는 상대 탭. 줄은 계약, 거래처, 매입_지출시트, 삼성명세서, 정산 순서로 5줄입니다.
+2) 표 아래에 시트끼리 어떻게 이어지는지 화살표 그림을 글자로 그려 주세요.
+[예외 처리] 삼성주문번호가 비어 있는 매입 기록은 어떻게 연결할지 3줄 이내로 제안해 주세요.
+[금지] 어려운 용어는 쓰지 말고 초보자도 이해할 수 있게 짧게 설명해 주세요. 열 이름에 없는 새 시트나 새 번호는 만들지 마세요.</pre></div>
+    <div class="box ok"><b>✅ 이렇게 나오면 성공</b>AI 답에 <b>다섯 칸 · 다섯 줄짜리 표 하나</b>와 화살표 그림이 있습니다. 표의 칸 이름이 B-1 설계안(<code class="i">설계</code> 탭 A1:E1)과 같습니다. 맞는지 틀린지는 아직 판단하지 않습니다. B-3에서 합니다.</div>
+    <div class="box warn"><b>⚠ 답 모양이 다르면</b>칸이 다르거나 표가 여러 개로 나오면, 같은 대화창에 <code class="i">위 순서의 다섯 칸, 다섯 줄짜리 표 하나로 다시 보여 줘</code>라고 한 번 더 보냅니다.</div>
+  </div>
+
+  <div class="step" data-id="b3">
+    <h3><span class="no">B-3</span>AI 초안 검토하고 팀이 확정하기</h3>
+    <p class="goal">🎯 최종 결정은 사람이 합니다. AI 답을 그대로 믿지 말고 점검합니다.</p>
+    <ol>
+      <li>B-1에서 확인한 <code class="i">설계</code> 탭 설계안(A1:E6)과 AI 답을 칸별로 비교합니다. <b>다른 칸</b>은 채우기 색을 빨간색으로 칠합니다.</li>
+      <li>빨간 칸마다 그 탭을 직접 열어서 누가 맞는지 확인합니다. 확인하는 법은 B-1과 같습니다(1행 제목 보기, 기본 키는 <code class="i">설계</code> 탭 I·J열 숫자가 같은지). 예: "거래처ID가 정말 매입_지출시트 1행에 있나?"</li>
+      <li>같은 테이블에 앉은 팀원과 결과를 맞춰 보고, 팀이 정한 내용으로 <code class="i">설계</code> 탭 표를 고칩니다. 영업과 경영지원이 함께 보면 더 좋습니다. 이 번호는 두 부서가 같이 쓸 약속이기 때문입니다.</li>
+      <li>아래 표를 <code class="i">설계</code> 탭 <b>A9</b>에 붙여 넣고 채웁니다. 첫 줄은 예시입니다.</li>
+    </ol>
+    <div class="code" data-tsv><div class="cap"><span>설계 탭 A9에 붙여넣기</span><button class="copy">복사</button></div><pre>결정한 것 | AI 초안과 같은가 | 이렇게 정한 이유 | 결정한 사람
+계약의 기본 키 | 같음 (계약번호) | 계약 탭 A열 계약번호가 40줄 모두 다름 (설계 탭 I2·J2 = 40·40) | 팀 합의
+매입 ↔ 계약을 잇는 키 |  |  |
+매입 ↔ 삼성명세서를 잇는 키 |  |  |
+삼성주문번호가 빈 매입 처리 |  |  | </pre></div>
+    <ul>
+      <li><b>AI 초안과 같은가:</b> "같음" 또는 "다름". 괄호 안에 정한 답(키 이름)을 적습니다.</li>
+      <li><b>이렇게 정한 이유:</b> 탭을 열어 <b>직접 확인한 사실</b> 한 문장. "AI가 그렇게 말해서"는 이유가 아닙니다.</li>
+      <li><b>결정한 사람:</b> 혼자 정했으면 내 이름, 팀이 함께 정했으면 "팀 합의".</li>
+      <li><b>삼성주문번호가 빈 매입 처리:</b> 정답이 하나가 아닙니다. AI 제안과 내 생각 중 우리 회사에서 실제로 할 수 있는 방법을 적습니다. (A-5에서 센 빈칸 9건을 떠올려 보세요.)</li>
+    </ul>
+    <div class="box ok"><b>✅ 이렇게 나오면 성공</b>네 줄 모두 "이렇게 정한 이유"에 탭에서 확인한 사실이 적혀 있습니다. 빨간 칸이 있었다면 <code class="i">설계</code> 탭 표가 확인한 쪽으로 고쳐져 있습니다.</div>
+  </div>
+
+  <div class="step" data-id="b4">
+    <h3><span class="no">B-4</span>관계도 그리기</h3>
+    <p class="goal">🎯 표끼리 어떻게 이어지는지 그림 한 장으로 남깁니다.</p>
+    <ol>
+      <li>종이(또는 <code class="i">설계</code> 탭 A16 아래 빈 곳)에 탭 다섯 개를 <b>상자</b>로 그립니다: 계약, 거래처, 매입_지출시트, 삼성명세서, 정산.</li>
+      <li><code class="i">설계</code> 탭 표의 "연결 키"와 "잇는 상대 탭" 칸을 한 줄씩 보며, 이어지는 두 상자를 <b>선</b>으로 잇습니다.</li>
+      <li>선 위에 그 연결 키 이름을 적습니다. 예: 계약 ─ <i>계약번호</i> ─ 정산</li>
+      <li>다 그린 뒤 아래 정답 그림을 펼쳐 맞춰 봅니다. 한두 명이 화면을 공유해 함께 확인합니다.</li>
+    </ol>
+    <details><summary>정답 그림 펼치기 (다 그린 뒤에)</summary>
+      <div class="flow"><span>거래처</span><i>─ 거래처ID ─</i><span>매입_지출시트</span><i>─ 계약번호 ─</i><span>계약</span><i>─ 계약번호 ─</i><span>정산</span></div>
+      <div class="flow"><span>매입_지출시트</span><i>─ 삼성주문번호 ─</i><span>삼성명세서</span></div>
+      <p>계약과 삼성명세서도 삼성주문번호로 이을 수 있습니다. 선이 하나 더 있어도 맞습니다.</p>
+    </details>
+    <div class="box ok"><b>✅ 1·2교시 완료 기준</b><code class="i">설계</code> 탭 설계안의 확인 칸에 O가 15개 있고(B-1), 결정한 이유가 남아 있고(B-3), 다섯 상자가 모두 선으로 이어진 관계도가 있습니다(B-4).</div>
+  </div>
+</section>
+
+<!-- ===================== 2회차 3교시 ===================== -->
+<section class="block" id="d2-3">
+  <h2>2회차 3교시 · 데이터 적재와 점검: 빠짐없이, 틀림없이 들어갔나</h2>
+  <div class="meta">11:00~12:00 · "적재"는 설계한 표에 데이터를 넣는 것입니다. 샘플 파일에는 2026년 9월 한 달 치가 마스킹된 채로 들어 있습니다.</div>
+
+  <div class="step" data-id="c1">
+    <h3><span class="no">C-1</span>점검 탭 만들기</h3>
+    <p class="goal">🎯 수식으로 "건수가 맞나, 중복은 없나, 금액은 맞나"를 한 번에 봅니다.</p>
+    <ol>
+      <li>새 탭 <code class="i">점검</code>을 만듭니다.</li>
+      <li>아래를 복사해 <code class="i">점검</code> 탭 A1에 붙여 넣습니다. B열에 수식이 함께 들어갑니다.</li>
+    </ol>
+    <div class="code" data-tsv><div class="cap"><span>점검 탭 A1에 붙여넣기 (A열 항목 · B열 수식 · C열 기대값)</span><button class="copy">복사</button></div><pre>점검 항목 | 결과 | 기대값
+계약 건수 | =COUNTA(계약!A2:A) | 40
+계약번호 중복 개수 | =SUMPRODUCT(--(COUNTIF(계약!A2:A41,계약!A2:A41)>1)) | 0
+수량×단가 합계 = 계약금액 합계 | =SUMPRODUCT(계약!H2:H41,계약!I2:I41)=SUM(계약!J2:J41) | TRUE
+매입 건수 | =COUNTA(매입_지출시트!A2:A) | 38
+계약에 없는 계약번호를 쓴 매입 | =SUMPRODUCT(--(COUNTIF(계약!A2:A41,매입_지출시트!B2:B39)=0)) | 0
+매입 기록이 없는 계약 | =SUMPRODUCT(--(COUNTIF(매입_지출시트!B2:B39,계약!A2:A41)=0)) | 2
+삼성주문번호가 빈 매입 | =COUNTBLANK(매입_지출시트!C2:C39) | 9</pre></div>
+    <div class="box ok"><b>✅ 이렇게 나오면 성공</b>B열 결과가 C열 기대값과 모두 같습니다.</div>
+    <div class="box warn"><b>⚠ B열에 수식이 글자 그대로 보이면</b>그 칸을 더블클릭한 뒤 <kbd>Enter</kbd>를 누르세요. 그래도 안 되면 수식만 한 칸씩 복사해 넣습니다.</div>
+  </div>
+
+  <div class="step" data-id="c2">
+    <h3><span class="no">C-2</span>일부러 망가뜨려 보기</h3>
+    <p class="goal">🎯 점검 수식이 진짜로 잡아내는지 직접 확인합니다.</p>
+    <ol>
+      <li><code class="i">계약</code> 탭 A2 칸을 클릭하고 <kbd>Ctrl</kbd>+<kbd>C</kbd>.</li>
+      <li>A3 칸을 클릭하고 <kbd>Ctrl</kbd>+<kbd>V</kbd>. (A3이 A2와 같은 번호가 됩니다)</li>
+      <li><code class="i">점검</code> 탭으로 가서 "계약번호 중복 개수"가 바뀌었는지 봅니다.</li>
+      <li>확인했으면 <code class="i">계약</code> 탭으로 돌아가 <kbd>Ctrl</kbd>+<kbd>Z</kbd>로 되돌립니다.</li>
+    </ol>
+    <div class="box ok"><b>✅ 이렇게 나오면 성공</b>중복 개수가 0 → <b>2</b>로 바뀌었다가(같은 번호 두 줄), 되돌리면 다시 0이 됩니다.</div>
+  </div>
+
+  <div class="step" data-id="c3">
+    <h3><span class="no">C-3</span>결과가 다르면 AI에게 묻기</h3>
+    <div class="code"><div class="cap"><span>Claude 프롬프트 (결과가 기대값과 다를 때)</span><button class="copy">복사</button></div><pre>구글 스프레드시트에서 점검 수식을 넣었는데 결과가 기대와 다릅니다.
+수식: (여기에 붙여 넣기)
+기대한 값: (예: 40)
+실제로 나온 값: (예: 41)
+시트 구조: 계약 탭 1행이 제목, 2행부터 41행까지 계약 40건
+원인이 될 만한 것을 쉬운 말로 알려 주고, 확인하는 방법을 순서대로 알려 주세요.</pre></div>
+  </div>
+</section>
+
+<!-- ===================== 2회차 4교시 ===================== -->
+<section class="block" id="d2-4">
+  <h2>2회차 4교시 · 계약마다 손익이 저절로 계산되게</h2>
+  <div class="meta">13:00~14:00 · 매입금액을 다시 입력하지 않고, 매입 탭에서 가져옵니다</div>
+
+  <div class="step" data-id="d1">
+    <h3><span class="no">D-1</span>계약 탭에 매입금액·손익·손익률 열 추가</h3>
+    <ol>
+      <li><code class="i">계약</code> 탭 O1에 <code class="i">매입금액</code>, P1에 <code class="i">손익</code>, Q1에 <code class="i">손익률</code>이라고 씁니다.</li>
+      <li>O2, P2, Q2에 아래 수식을 하나씩 넣습니다.</li>
+      <li>O2:Q2 세 칸을 함께 선택하고, 오른쪽 아래 작은 네모를 41행까지 끌어내립니다.</li>
+      <li>Q열을 선택하고 <span class="menu">서식</span> → <span class="menu">숫자</span> → <span class="menu">퍼센트</span>.</li>
+    </ol>
+    <div class="code"><div class="cap"><span>O2 · 매입금액 (매입 탭에서 이 계약번호의 매입금액을 모두 더해 옴)</span><button class="copy">복사</button></div><pre>=SUMIFS(매입_지출시트!H:H,매입_지출시트!B:B,A2)</pre></div>
+    <div class="code"><div class="cap"><span>P2 · 손익</span><button class="copy">복사</button></div><pre>=J2-O2</pre></div>
+    <div class="code"><div class="cap"><span>Q2 · 손익률 (계약금액이 0이면 빈칸)</span><button class="copy">복사</button></div><pre>=IF(J2=0,"",P2/J2)</pre></div>
+    <div class="box note"><b>💡 SUMIFS를 말로 읽으면</b>"<b>매입_지출시트 H열(매입금액)</b>을 더하는데, <b>B열(계약번호)</b>이 <b>이 줄의 계약번호(A2)</b>와 같은 것만 더해라."</div>
+    <div class="box ok"><b>✅ 이렇게 나오면 성공</b>2행(2026-09-001): 매입금액 <b>4,477,700</b> · 손익 <b>648,300</b> · 손익률 <b>12.6%</b></div>
+  </div>
+
+  <div class="step" data-id="d2">
+    <h3><span class="no">D-2</span>매입 기록이 없는 계약 찾기</h3>
+    <ol>
+      <li><code class="i">계약</code> 탭 아무 칸을 클릭하고 <span class="menu">데이터</span> → <span class="menu">필터 만들기</span>.</li>
+      <li>O1(매입금액)의 필터 단추 → <span class="menu">값별 필터링</span>에서 <b>0</b>만 남깁니다.</li>
+    </ol>
+    <div class="box ok"><b>✅ 이렇게 나오면 성공</b>두 줄이 남습니다: <b>2026-09-008</b>, <b>2026-09-009</b>. 1회차 한건추적의 "사례D 매입 기록 없음"과 같은 종류입니다. 담당자에게 확인할 건입니다.</div>
+    <p>확인 후 <span class="menu">데이터</span> → <span class="menu">필터 삭제</span>로 원래대로 둡니다.</p>
+  </div>
+
+  <div class="step" data-id="d3">
+    <h3><span class="no">D-3</span>(생각해 보기) As-Is 손익표와 비교</h3>
+    <p>As-Is 파일의 <code class="i">2_계약별손익(회계)</code> F열 손익과 지금 만든 P열 손익을 비교해 보세요. 1회차 A-3에서 찾은 <b>3줄</b>이 여기서도 다르게 나옵니다. 통합 DB는 계약금액을 한 번만 입력하므로 이런 차이가 생기지 않습니다.</p>
+  </div>
+</section>
+
+<!-- ===================== 2회차 5교시 ===================== -->
+<section class="block" id="d2-5">
+  <h2>2회차 5교시 · 조회 뷰: 원본을 고치면 따라 바뀌는 집계표</h2>
+  <div class="meta">14:00~15:00 · 매출처(수요기관)는 QUERY로, 매입처(거래처)는 피벗 테이블로 만듭니다</div>
+
+  <div class="step" data-id="e1">
+    <h3><span class="no">E-1</span>수요기관별 조회 뷰 (QUERY)</h3>
+    <ol>
+      <li>새 탭 <code class="i">조회뷰</code>를 만듭니다.</li>
+      <li>A1 칸 <b>하나</b>에 아래 수식을 붙여 넣습니다. 표가 아래로 저절로 펼쳐집니다.</li>
+    </ol>
+    <div class="code"><div class="cap"><span>조회뷰 A1 · 수요기관별 합계, 계약금액 큰 순</span><button class="copy">복사</button></div><pre>=QUERY(계약!A1:Q41,"select C, sum(J), sum(O), sum(P) where C is not null group by C order by sum(J) desc label C '수요기관', sum(J) '계약금액', sum(O) '매입금액', sum(P) '손익'",1)</pre></div>
+    <div class="box note"><b>💡 QUERY를 말로 읽으면</b>"계약 탭에서 C(수요기관), J(계약금액) 합, O(매입금액) 합, P(손익) 합을 골라(select), 수요기관별로 묶고(group by), 계약금액 큰 순으로 줄 세워라(order by)."</div>
+    <div class="box ok"><b>✅ 이렇게 나오면 성공</b>기관 <b>12곳</b>이 나오고 맨 위가 <b>아라초등학교 · 60,250,000 · 53,388,100 · 6,861,900</b>입니다.</div>
+    <details><summary>더 해 보기: 채널별 합계</summary>
+      <p>F1 칸에 같은 수식을 붙여 넣고 <code class="i">select C</code>, <code class="i">group by C</code>, <code class="i">label C '수요기관'</code>의 <b>C를 E</b>로, '수요기관'을 '채널'로 바꿉니다. S2B 계약금액이 <b>214,297,000</b>이면 맞습니다.</p>
+    </details>
+  </div>
+
+  <div class="step" data-id="e2">
+    <h3><span class="no">E-2</span>매입처별 조회 뷰 (피벗 테이블)</h3>
+    <ol>
+      <li><code class="i">매입_지출시트</code> 탭에서 A1 칸을 클릭합니다.</li>
+      <li><span class="menu">삽입</span> → <span class="menu">피벗 테이블</span>. 데이터 범위가 <code class="i">매입_지출시트!A1:L39</code>인지 확인하고, <b>새 시트</b>를 고른 뒤 <span class="menu">만들기</span>.</li>
+      <li>오른쪽 편집기에서 <b>행</b> 옆 <span class="menu">추가</span> → <code class="i">거래처ID</code>.</li>
+      <li><b>값</b> 옆 <span class="menu">추가</span> → <code class="i">매입금액</code> (요약 기준 SUM).</li>
+      <li><b>값</b> 옆 <span class="menu">추가</span>를 한 번 더 → <code class="i">매입ID</code> (요약 기준 COUNTA → 건수).</li>
+      <li>만들어진 탭 이름을 <code class="i">매입처뷰</code>로 바꿉니다.</li>
+    </ol>
+    <div class="box ok"><b>✅ 이렇게 나오면 성공</b>V001 <b>196,000,400</b>(23건) · V002 <b>40,896,800</b>(8건) … 총계 <b>257,000,900</b>(38건)</div>
+    <div class="box note"><b>💡 QUERY와 피벗, 무엇이 다른가</b>QUERY는 수식 한 줄이라 복사·수정이 쉽고, 피벗은 마우스로 끌어 놓기만 하면 됩니다. 결과는 같으니 편한 것을 쓰면 됩니다.</div>
+  </div>
+
+  <div class="step" data-id="e3">
+    <h3><span class="no">E-3</span>합계 검증과 연동 확인</h3>
+    <div class="tbl"><table>
+      <tr><th>확인 항목</th><th>수식 (점검 탭 아래에 넣어도 됩니다)</th><th class="num">기대값</th></tr>
+      <tr><td>계약금액 합계</td><td><code class="i">=SUM(계약!J2:J41)</code></td><td class="num">293,564,000</td></tr>
+      <tr><td>매입금액 합계</td><td><code class="i">=SUM(계약!O2:O41)</code></td><td class="num">257,000,900</td></tr>
+      <tr><td>손익 합계</td><td><code class="i">=SUM(계약!P2:P41)</code></td><td class="num">36,563,100</td></tr>
+      <tr><td>수요기관 수</td><td>조회뷰 표의 행 수</td><td class="num">12</td></tr>
+    </table></div>
+    <ol>
+      <li><code class="i">매입_지출시트</code> H2(매입금액)를 아무 숫자로 바꿉니다.</li>
+      <li><code class="i">조회뷰</code>와 <code class="i">매입처뷰</code>가 따라 바뀌는지 봅니다. (피벗은 몇 초 걸릴 수 있습니다)</li>
+      <li><kbd>Ctrl</kbd>+<kbd>Z</kbd>로 되돌립니다.</li>
+    </ol>
+    <div class="box ok"><b>✅ 5교시 완료 기준</b>세 합계가 기대값과 같고, 원본을 고치면 조회뷰가 따라 바뀌는 것을 직접 봤습니다. <b>입력은 한 곳, 보는 곳은 여러 곳</b> → 재입력 4회가 1회가 됩니다.</div>
+  </div>
+
+  <div class="step" data-id="e4">
+    <h3><span class="no">E-4</span>As-Is 월합계표와 맞춰 보기</h3>
+    <p>As-Is 파일의 <code class="i">3_매출처·매입처(월합계)</code>와 지금 만든 <code class="i">조회뷰</code>의 계약금액을 기관별로 비교합니다. 다른 기관이 <b>2곳</b> 있습니다. 1회차 A-3②에서 찾은 곳과 같은가요? 손으로 합산하다 한 건씩 빠진 것입니다. 매입처 쪽(매입처뷰)은 모두 같습니다.</p>
+  </div>
+</section>
+
+<!-- ===================== 2회차 6교시 ===================== -->
+<section class="block" id="d2-6">
+  <h2>2회차 6교시 · 거래처 마스터와 발주서 자동 채움</h2>
+  <div class="meta">15:00~16:00 · 계약번호 하나만 고르면 발주서 내용이 채워지게 만듭니다</div>
+
+  <div class="step" data-id="f1">
+    <h3><span class="no">F-1</span>발주서 탭 만들기 (항목과 수식 한 번에)</h3>
+    <p class="goal">🎯 <code class="i">거래처</code> 탭이 <b>주소록(마스터)</b> 역할을 합니다. 발주서는 주소록에서 찾아 채우기만 합니다.</p>
+    <ol>
+      <li>새 탭 <code class="i">발주서</code>를 만듭니다.</li>
+      <li>아래를 복사해 <code class="i">발주서</code> 탭 <b>A1</b>에 붙여 넣습니다. A열에 항목 이름, B열에 수식이 들어갑니다. (B2는 비워 둡니다)</li>
+    </ol>
+    <div class="code" data-tsv><div class="cap"><span>발주서 탭 A1에 붙여넣기 (A1:B17)</span><button class="copy">복사</button></div><pre>항목 | 값
+계약번호 |
+수요기관 | =XLOOKUP($B$2,계약!$A:$A,계약!$C:$C,"")
+품명 | =XLOOKUP($B$2,계약!$A:$A,계약!$G:$G,"")
+모델명 | =XLOOKUP($B$2,계약!$A:$A,계약!$F:$F,"")
+수량 | =XLOOKUP($B$2,계약!$A:$A,계약!$H:$H,"")
+인도처코드 | =XLOOKUP($B$2,계약!$A:$A,계약!$L:$L,"")
+납품기한 | =TEXT(XLOOKUP($B$2,계약!$A:$A,계약!$N:$N,""),"yyyy-mm-dd")
+거래처ID | =XLOOKUP($B$2,매입_지출시트!$B:$B,매입_지출시트!$D:$D,"매입 기록 없음")
+매입단가 | =XLOOKUP($B$2,매입_지출시트!$B:$B,매입_지출시트!$G:$G,"")
+매입금액 | =IFERROR(B6*B10,"")
+거래처명 | =XLOOKUP($B$9,거래처!$A:$A,거래처!$B:$B,"")
+사업자번호 | =XLOOKUP($B$9,거래처!$A:$A,거래처!$D:$D,"")
+담당자 | =XLOOKUP($B$9,거래처!$A:$A,거래처!$E:$E,"")
+연락처 | =XLOOKUP($B$9,거래처!$A:$A,거래처!$F:$F,"")
+계좌 | =XLOOKUP($B$9,거래처!$A:$A,거래처!$G:$G,"")
+결제조건 | =XLOOKUP($B$9,거래처!$A:$A,거래처!$H:$H,"")</pre></div>
+    <div class="box note"><b>💡 XLOOKUP을 말로 읽으면</b><code class="i">=XLOOKUP(B2, 계약!A:A, 계약!C:C, "")</code> → "B2에 적힌 계약번호를 <b>계약 탭 A열</b>에서 찾아서, 같은 줄 <b>C열(수요기관)</b> 값을 가져와라. 못 찾으면 빈칸."<br><b>$</b> 표시는 "이 칸 주소는 고정"이라는 뜻입니다.</div>
+    <div class="box warn"><b>⚠ 수식 오류가 나면</b>쉼표 대신 세미콜론(;)을 쓰는 지역 설정일 수 있습니다. <span class="menu">파일</span> → <span class="menu">설정</span>에서 언어·지역을 "대한민국"으로 확인하세요.</div>
+  </div>
+
+  <div class="step" data-id="f2">
+    <h3><span class="no">F-2</span>B2에 계약번호 고르는 목록(드롭다운) 만들기</h3>
+    <ol>
+      <li><code class="i">발주서</code> 탭 B2 칸을 클릭합니다.</li>
+      <li><span class="menu">데이터</span> → <span class="menu">데이터 확인</span> → 오른쪽 창에서 <span class="menu">규칙 추가</span>.</li>
+      <li>기준을 <b>드롭다운(범위)</b>으로 고르고 범위에 <code class="i">계약!A2:A41</code>을 적은 뒤 <span class="menu">완료</span>.</li>
+      <li>B2의 ▼를 눌러 <code class="i">2026-09-001</code>을 고릅니다.</li>
+    </ol>
+    <div class="box ok"><b>✅ 이렇게 나오면 성공</b>
+      <div class="tbl"><table>
+        <tr><th>항목</th><th>2026-09-001을 고르면</th></tr>
+        <tr><td>수요기관</td><td>○○구청 교육지원과(가상)</td></tr>
+        <tr><td>품명 / 모델명</td><td>삼성 전자칠판 86인치 / LH86WMBWLGCXKR</td></tr>
+        <tr><td>수량 · 인도처코드 · 납품기한</td><td>1 · D204 · 2026-09-13</td></tr>
+        <tr><td>거래처ID / 거래처명</td><td>V001 / 삼성전자 B2B(직송)</td></tr>
+        <tr><td>매입단가 / 매입금액</td><td class="num">4,477,700 / 4,477,700</td></tr>
+      </table></div></div>
+  </div>
+
+  <div class="step" data-id="f3">
+    <h3><span class="no">F-3</span>다른 계약으로 바꿔 보며 검증</h3>
+    <ul>
+      <li><code class="i">2026-09-002</code> → 늘봄중학교 · 거래처명 삼성전자 B2B(직송) · 매입금액 3,051,500</li>
+      <li><code class="i">2026-09-010</code> → 늘봄중학교 · 삼성 데스크탑 PC 30대 · 매입금액 21,321,000</li>
+      <li><code class="i">2026-09-003</code> → 한빛고등학교 · 거래처명 온누리디스플레이 · 인도처코드는 <b>빈칸</b>(삼성 주문이 아닌 건)</li>
+      <li><code class="i">2026-09-008</code> → 거래처ID에 <b>매입 기록 없음</b>. 발주 전에 담당자가 확인해야 하는 건입니다.</li>
+    </ul>
+    <div class="box note"><b>💡 마스터의 힘</b><code class="i">거래처</code> 탭에서 V001의 담당자를 다른 이름으로 바꿔 보세요. 발주서가 바로 바뀝니다. 거래처 정보는 <b>한 곳에서만</b> 고치면 됩니다. 확인 후 <kbd>Ctrl</kbd>+<kbd>Z</kbd>.</div>
+  </div>
+</section>
+
+<!-- ===================== 2회차 7교시 ===================== -->
+<section class="block" id="d2-7">
+  <h2>2회차 7교시 · Apps Script 입문: 시트에 심부름 로봇 들이기</h2>
+  <div class="meta">16:00~17:00 · 코드를 직접 짜지 않습니다. 받은 코드를 붙여 넣고, 실행하고, 오류가 나면 AI에게 되돌립니다.</div>
+
+  <div class="box note"><b>💡 수식과 스크립트는 무엇이 다른가</b><b>수식</b>은 칸 안에서 계산만 하는 계산기입니다. <b>스크립트</b>는 탭을 만들고, 값을 적고, 파일을 저장하는 심부름 로봇입니다. 로봇에게 "무엇을 해라"를 적은 쪽지가 코드입니다.</div>
+
+  <div class="step" data-id="g1">
+    <h3><span class="no">G-1</span>스크립트 편집기 열고 코드 붙여 넣기</h3>
+    <ol>
+      <li><b>PBL 샘플 데이터 사본</b>에서 <span class="menu">확장 프로그램</span> → <span class="menu">Apps Script</span>. 새 탭에 편집기가 열립니다.</li>
+      <li>왼쪽 위 "제목 없는 프로젝트"를 클릭해 이름을 <code class="i">통합DB 자동화</code>로 바꿉니다.</li>
+      <li>가운데 편집 창의 내용(<code class="i">function myFunction() {...}</code>)을 <kbd>Ctrl</kbd>+<kbd>A</kbd>로 모두 선택해 지웁니다.</li>
+      <li>아래 코드를 복사해 붙여 넣고 💾(저장) 또는 <kbd>Ctrl</kbd>+<kbd>S</kbd>.</li>
+    </ol>
+    <div class="code"><div class="cap"><span>Code.gs · 메뉴 만들기 + 계약 입력 검사 + 변경 로그</span><button class="copy">복사</button></div><pre>// 시트를 열 때마다 메뉴를 만든다
+// 코드 파일이 준비된 메뉴만 보인다 (발주서는 8교시, 대사는 3회차에 저절로 생김)
+function onOpen() {
+  var ui = SpreadsheetApp.getUi();
+  ui.createMenu('검증')
+    .addItem('계약 입력 검사', 'checkContracts')
+    .addToUi();
+  if (typeof saveCurrentPdf === 'function') {
+    ui.createMenu('발주서')
+      .addItem('현재 건 PDF 저장', 'saveCurrentPdf')
+      .addItem('발주대상 일괄 PDF 저장', 'saveBatchPdf')
+      .addToUi();
+  }
+  if (typeof runReconcile === 'function') {
+    ui.createMenu('대사')
+      .addItem('삼성 명세서 대사 실행', 'runReconcile')
+      .addToUi();
+  }
+}
+
+// 검증 > 계약 입력 검사 를 누르면 실행된다
+function checkContracts() {
+  var ss = SpreadsheetApp.getActive();
+  var rows = ss.getSheetByName('계약').getDataRange().getValues().slice(1);
+  var issues = findContractIssues_(rows);
+  var out = ss.getSheetByName('검증결과') || ss.insertSheet('검증결과');
+  out.clearContents();
+  out.getRange(1, 1, 1, 3).setValues([['행', '항목', '문제']]);
+  if (issues.length) out.getRange(2, 1, issues.length, 3).setValues(issues);
+  ss.toast(issues.length === 0 ? '문제가 없습니다.' : issues.length + '건의 문제를 찾았습니다. 검증결과 탭을 확인하세요.', '계약 입력 검사', 6);
+}
+
+// 필수값 비어 있음, 계약번호 중복, 금액 이상을 찾는다
+function findContractIssues_(rows) {
+  var issues = [], seen = {};
+  rows.forEach(function (r, i) {
+    var line = i + 2, no = String(r[0]).trim();
+    if (!no) issues.push([line, '계약번호', '비어 있음']);
+    else if (seen[no]) issues.push([line, '계약번호', '중복(' + seen[no] + '행과 동일)']);
+    else seen[no] = line;
+    if (!String(r[2]).trim()) issues.push([line, '수요기관', '비어 있음']);
+    if (!(Number(r[9]) > 0)) issues.push([line, '계약금액', '0 이하 또는 숫자가 아님']);
+  });
+  return issues;
+}
+
+// 계약 탭을 고치면 변경로그 탭에 한 줄 기록한다 (변경로그 탭이 있을 때만)
+function onEdit(e) {
+  if (e.range.getSheet().getName() !== '계약') return;
+  var log = e.source.getSheetByName('변경로그');
+  if (!log) return;
+  log.appendRow([new Date(), e.range.getA1Notation(),
+    e.oldValue === undefined ? '' : e.oldValue,
+    e.value === undefined ? '' : e.value]);
+}</pre></div>
+    <div class="box note"><b>💡 지금은 '검증' 메뉴 하나만 생깁니다</b>방을 지어야 문패가 붙듯, 메뉴도 코드 파일이 있어야 나타납니다. '발주서'는 8교시에, '대사'는 3회차에 코드 파일을 더하면 저절로 생깁니다.</div>
+  </div>
+
+  <div class="step" data-id="g2">
+    <h3><span class="no">G-2</span>AI에게 코드 설명 듣기</h3>
+    <p class="goal">🎯 코드를 외울 필요는 없습니다. 무엇을 하는지만 알면 됩니다.</p>
+    <div class="code"><div class="cap"><span>Claude 프롬프트 (아래에 Code.gs 전체를 붙여 넣기)</span><button class="copy">복사</button></div><pre>저는 코딩을 처음 배우는 회사원입니다. 아래 구글 Apps Script 코드가 무엇을 하는지 설명해 주세요.
+[원하는 결과] 함수마다 "언제 실행되는지"와 "무엇을 하는지"를 한두 문장으로, 중학생도 알아들을 말로 설명해 주세요.
+[특히] findContractIssues_ 함수가 어떤 경우를 문제로 보는지 목록으로 알려 주세요.
+
+(여기에 코드 붙여 넣기)</pre></div>
+  </div>
+
+  <div class="step" data-id="g3">
+    <h3><span class="no">G-3</span>처음 실행하고 권한 허락하기</h3>
+    <ol>
+      <li>시트 탭으로 돌아와 <kbd>F5</kbd>(새로고침). 몇 초 뒤 메뉴줄 오른쪽 끝(도움말 옆)에 <span class="menu">검증</span>이 생깁니다.</li>
+      <li><span class="menu">검증</span> → <span class="menu">계약 입력 검사</span>를 누릅니다.</li>
+      <li>"승인 필요" 창 → <span class="menu">확인</span>(또는 권한 검토) → 내 계정 선택.</li>
+      <li>"Google에서 확인하지 않은 앱" 화면 → 왼쪽 아래 <span class="menu">고급</span> → <span class="menu">통합DB 자동화(으)로 이동(안전하지 않음)</span>.</li>
+      <li>권한 목록이 나오면 <span class="menu">허용</span>(체크박스가 있으면 <b>모두 선택</b> 후 <span class="menu">계속</span>).</li>
+      <li>다시 <span class="menu">검증</span> → <span class="menu">계약 입력 검사</span>를 누릅니다.</li>
+    </ol>
+    <div class="box note"><b>💡 "확인하지 않은 앱" 경고는 정상입니다</b>내가 방금 만든 스크립트라서 구글이 아직 검사하지 않았다는 뜻입니다. 내 시트를 내 로봇이 써도 되는지 묻는 것입니다.</div>
+    <div class="box ok"><b>✅ 이렇게 나오면 성공</b>오른쪽 아래에 <b>"문제가 없습니다."</b> 안내가 뜨고, <code class="i">검증결과</code> 탭이 생기며 제목 줄(행 · 항목 · 문제)만 있습니다.</div>
+  </div>
+
+  <div class="step" data-id="g4">
+    <h3><span class="no">G-4</span>일부러 틀리게 만들어 로봇이 잡는지 보기</h3>
+    <ol>
+      <li><code class="i">계약</code> 탭 A2를 <kbd>Ctrl</kbd>+<kbd>C</kbd> → A7을 클릭하고 <kbd>Ctrl</kbd>+<kbd>V</kbd>. (직접 타이핑하면 날짜로 바뀔 수 있으니 복사·붙여넣기로)</li>
+      <li>C9 칸(수요기관)을 클릭하고 <kbd>Delete</kbd>.</li>
+      <li><span class="menu">검증</span> → <span class="menu">계약 입력 검사</span>.</li>
+    </ol>
+    <div class="box ok"><b>✅ 이렇게 나오면 성공</b>"2건의 문제를 찾았습니다." · 검증결과 탭에 <b>7행 계약번호 중복(2행과 동일)</b>, <b>9행 수요기관 비어 있음</b></div>
+    <p>확인 후 <code class="i">계약</code> 탭에서 <kbd>Ctrl</kbd>+<kbd>Z</kbd>를 두 번 눌러 되돌리고, 검사를 한 번 더 실행해 "문제가 없습니다."를 확인합니다.</p>
+  </div>
+
+  <div class="step" data-id="g5">
+    <h3><span class="no">G-5</span>누가 언제 고쳤는지 남기기 (변경 로그)</h3>
+    <ol>
+      <li>새 탭 <code class="i">변경로그</code>를 만들고 A1:D1에 <code class="i">일시 · 셀 · 이전 값 · 새 값</code>을 씁니다.</li>
+      <li><code class="i">계약</code> 탭 H2(수량)를 1 → 2로 고칩니다.</li>
+      <li><code class="i">변경로그</code> 탭을 봅니다.</li>
+    </ol>
+    <div class="box ok"><b>✅ 이렇게 나오면 성공</b>한 줄이 생깁니다: 지금 시각 · H2 · 1 · 2. 확인 후 H2를 1로 되돌립니다.</div>
+  </div>
+
+  <div class="step" data-id="g6">
+    <h3><span class="no">G-6</span>오류가 나면 AI에게 되돌리기 (연습)</h3>
+    <p class="goal">🎯 오류는 실패가 아니라 AI에게 줄 재료입니다. 일부러 오류를 내고 고쳐 봅니다.</p>
+    <ol>
+      <li>편집기에서 <code class="i">getSheetByName('계약')</code>의 <code class="i">'계약'</code>을 <code class="i">'계약서'</code>로 바꾸고 저장합니다.</li>
+      <li>시트에서 <span class="menu">검증</span> → <span class="menu">계약 입력 검사</span>. 오류 메시지가 뜹니다.</li>
+      <li>아래 틀에 오류 메시지를 넣어 Claude에 보냅니다.</li>
+      <li>Claude가 알려 준 대로 고치고 다시 실행해 "문제가 없습니다."가 나오면 성공입니다.</li>
+    </ol>
+    <div class="code"><div class="cap"><span>오류 수정 요청 틀</span><button class="copy">복사</button></div><pre>Apps Script를 실행했더니 오류가 납니다.
+오류 메시지: (여기에 붙여 넣기)
+실행한 메뉴: 검증 > 계약 입력 검사
+기대한 결과: 계약 탭을 검사해서 검증결과 탭에 문제를 적어야 합니다.
+시트 탭 이름: README, 계약, 거래처, 매입_지출시트, 삼성명세서, 정산 (그 밖에 내가 만든 탭: 점검, 조회뷰, 발주서 등)
+원인과 고친 코드를 알려 주고, 고친 부분이 무엇인지 쉬운 말로 설명해 주세요.</pre></div>
+    <div class="box ok"><b>✅ 7교시 완료 기준</b>검증 메뉴가 생기고, 일부러 만든 문제 2건을 로봇이 잡았고, 변경로그에 한 줄이 남았고, 오류 수정 요청 틀을 한 번 써 봤습니다.</div>
+  </div>
+</section>
+
+<!-- ===================== 2회차 8교시 ===================== -->
+<section class="block" id="d2-8">
+  <h2>2회차 8교시 · 발주서 PDF를 한 건씩, 여러 건 한꺼번에</h2>
+  <div class="meta">17:00~18:00 · 6교시에 만든 발주서 탭을 로봇이 PDF로 저장합니다</div>
+
+  <div class="step" data-id="h1">
+    <h3><span class="no">H-1</span>발주서 코드 파일 추가</h3>
+    <ol>
+      <li>Apps Script 편집기 왼쪽 <b>파일</b> 옆 <span class="menu">＋</span> → <span class="menu">스크립트</span>. 이름을 <code class="i">발주서</code>로 적고 <kbd>Enter</kbd>.</li>
+      <li>새 파일의 기본 내용을 지우고 아래 코드를 붙여 넣은 뒤 저장(<kbd>Ctrl</kbd>+<kbd>S</kbd>).</li>
+      <li>시트 탭으로 돌아와 <kbd>F5</kbd>(새로고침). 몇 초 뒤 메뉴줄의 <span class="menu">검증</span> 옆에 <span class="menu">발주서</span>가 새로 생깁니다.</li>
+    </ol>
+    <div class="box warn"><b>⚠ Code.gs에 붙이지 마세요</b>반드시 <b>새 파일</b>에 붙입니다. Code.gs의 내용은 그대로 둡니다.</div>
+    <div class="code"><div class="cap"><span>발주서.gs · PDF 저장 (한 건 / 여러 건)</span><button class="copy">복사</button></div><pre>var FOLDER_NAME = '발주서_PDF';
+
+// 발주서 탭을 PDF로 만들어 내 드라이브의 '발주서_PDF' 폴더에 저장한다
+function exportPdf_(ss, sheet, fileName) {
+  var folders = DriveApp.getFoldersByName(FOLDER_NAME);
+  var folder = folders.hasNext() ? folders.next() : DriveApp.createFolder(FOLDER_NAME);
+  var url = 'https://docs.google.com/spreadsheets/d/' + ss.getId() +
+    '/export?format=pdf&amp;gid=' + sheet.getSheetId() +
+    '&amp;portrait=true&amp;size=A4&amp;fitw=true&amp;gridlines=false';
+  var res = UrlFetchApp.fetch(url, { headers: { Authorization: 'Bearer ' + ScriptApp.getOAuthToken() } });
+  folder.createFile(res.getBlob().setName(fileName + '.pdf'));
+}
+
+// 발주서 > 현재 건 PDF 저장
+function saveCurrentPdf() {
+  var ss = SpreadsheetApp.getActive();
+  var sh = ss.getSheetByName('발주서');
+  var no = String(sh.getRange('B2').getDisplayValue());
+  if (!no) { ss.toast('B2에 계약번호를 선택하세요.', '발주서', 5); return; }
+  if (sh.getRange('B9').getDisplayValue() === '매입 기록 없음') {
+    ss.toast('매입 기록이 없는 계약입니다. 담당자에게 확인하세요.', '발주서', 5); return;
+  }
+  exportPdf_(ss, sh, '발주서_' + no);
+  ss.toast('저장했습니다: 발주서_' + no + '.pdf', '발주서', 5);
+}
+
+// 발주서 > 발주대상 일괄 PDF 저장
+function saveBatchPdf() {
+  var ss = SpreadsheetApp.getActive();
+  var sh = ss.getSheetByName('발주서');
+  var list = ss.getSheetByName('발주대상');
+  var log = ss.getSheetByName('발주서_로그') || ss.insertSheet('발주서_로그');
+  var nos = list.getRange('A2:A').getDisplayValues()
+    .map(function (r) { return String(r[0]).trim(); })
+    .filter(function (v) { return v !== ''; });
+  var original = sh.getRange('B2').getValue();
+  var saved = 0;
+  sh.getRange('B2').setNumberFormat('@'); // 계약번호가 날짜로 바뀌지 않게 글자 서식으로
+  nos.forEach(function (no) {
+    sh.getRange('B2').setValue(no);
+    SpreadsheetApp.flush();
+    if (sh.getRange('B9').getDisplayValue() === '매입 기록 없음') {
+      log.appendRow([new Date(), no, '건너뜀(매입 기록 없음)']);
+      return;
+    }
+    exportPdf_(ss, sh, '발주서_' + no);
+    log.appendRow([new Date(), no, '저장']);
+    saved++;
+  });
+  sh.getRange('B2').setValue(original);
+  ss.toast(nos.length + '건 중 ' + saved + '건 저장', '발주서', 8);
+}</pre></div>
+    <div class="box ok"><b>✅ 이렇게 나오면 성공</b>F5 후 메뉴줄에 <span class="menu">검증</span> <span class="menu">발주서</span> 두 개가 보입니다. <span class="menu">발주서</span>를 누르면 "현재 건 PDF 저장", "발주대상 일괄 PDF 저장"이 있습니다.</div>
+  </div>
+
+  <div class="step" data-id="h2">
+    <h3><span class="no">H-2</span>한 건 먼저 저장해 보기</h3>
+    <ol>
+      <li><code class="i">발주서</code> 탭 B2에서 <code class="i">2026-09-001</code>을 고릅니다.</li>
+      <li><span class="menu">발주서</span> → <span class="menu">현재 건 PDF 저장</span>.</li>
+      <li><b>권한 창이 한 번 더 뜹니다.</b> 이번에는 "드라이브에 파일 만들기"와 "외부 서비스 연결" 권한이 새로 필요하기 때문입니다. 7교시처럼 <span class="menu">고급</span> → <span class="menu">이동</span> → <span class="menu">허용</span>.</li>
+      <li>다시 <span class="menu">발주서</span> → <span class="menu">현재 건 PDF 저장</span>.</li>
+      <li>구글 드라이브(내 드라이브)에서 <code class="i">발주서_PDF</code> 폴더를 열어 PDF를 엽니다.</li>
+    </ol>
+    <div class="box ok"><b>✅ 이렇게 나오면 성공</b>"저장했습니다: 발주서_2026-09-001.pdf" 안내, 폴더에 PDF 1개. PDF를 열어 수요기관·거래처명·매입금액이 발주서 탭과 같은지 확인합니다.</div>
+    <p>이어서 B2를 <code class="i">2026-09-008</code>로 바꾸고 다시 실행해 보세요. <b>"매입 기록이 없는 계약입니다"</b> 안내만 나오고 파일은 생기지 않아야 맞습니다.</p>
+  </div>
+
+  <div class="step" data-id="h3">
+    <h3><span class="no">H-3</span>여러 건을 한 번에</h3>
+    <ol>
+      <li>새 탭 <code class="i">발주대상</code>을 만들고 A1에 <code class="i">계약번호</code>라고 씁니다.</li>
+      <li><code class="i">계약</code> 탭에서 2026-09-001, 2026-09-002를 복사해 <code class="i">발주대상</code> A2:A3에 <b>값만 붙여넣기</b>(<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd>).</li>
+      <li><code class="i">계약</code> 탭의 2026-09-008도 복사해 A4에 값만 붙여넣기.</li>
+      <li><span class="menu">발주서</span> → <span class="menu">발주대상 일괄 PDF 저장</span>.</li>
+    </ol>
+    <div class="box ok"><b>✅ 이렇게 나오면 성공</b><b>"3건 중 2건 저장"</b> 안내 · 폴더에 PDF 2개 추가(001, 002) · <code class="i">발주서_로그</code> 탭에 3줄(저장 2, 건너뜀 1)</div>
+    <div class="box warn"><b>⚠ 처음에는 10건 이하로</b>한 번에 너무 많이 돌리면 실행 시간 제한(약 6분)에 걸릴 수 있습니다. 같은 계약을 또 저장하면 폴더에 같은 이름 파일이 하나 더 생깁니다.</div>
+  </div>
+
+  <div class="step" data-id="h4">
+    <h3><span class="no">H-4</span>오늘 정리</h3>
+    <ul>
+      <li>오늘 만든 탭: <code class="i">설계 · 점검 · 조회뷰 · 매입처뷰 · 발주서 · 검증결과 · 변경로그 · 발주대상 · 발주서_로그</code></li>
+      <li>1회차 성공지표 표의 "발주서 1건 만드는 시간"(체감)을 다시 봅니다. 오늘 해 보니 얼마나 달라졌나요?</li>
+      <li>3회차(12.3)에는 이 파일에 <b>삼성 명세서 대사</b> 버튼을 추가합니다. 파일을 지우지 마세요.</li>
+    </ul>
+    <div class="box ok"><b>✅ 2회차 완료 기준</b>계약번호를 고르면 발주서가 채워지고, PDF 한 건과 여러 건을 저장했으며, 매입 기록이 없는 건은 건너뛰고 로그에 남았습니다.</div>
+  </div>
+</section>
+
+<!-- ===================== 막힐 때 ===================== -->
+<section class="block" id="help">
+  <h2>막힐 때 보는 곳</h2>
+  <div class="tbl"><table>
+    <tr><th>이런 화면이면</th><th>이렇게 해 보세요</th></tr>
+    <tr><td><code class="i">#NAME?</code></td><td>함수 이름 오타이거나 탭 이름이 다릅니다. 탭 이름(계약, 매입_지출시트 등)의 띄어쓰기·밑줄을 확인하세요.</td></tr>
+    <tr><td><code class="i">#REF!</code> 또는 "범위를 찾을 수 없음"</td><td>탭 이름이 바뀌었거나 지워졌습니다. 이름에 괄호·점이 있으면 <code class="i">'1_주문현황(영업)'!G2</code>처럼 작은따옴표로 감쌉니다.</td></tr>
+    <tr><td><code class="i">#N/A</code>, 발주서가 빈칸</td><td>B2 계약번호가 계약 탭과 똑같은지 확인하세요. 직접 타이핑해서 날짜로 바뀌었을 수 있습니다. 드롭다운에서 고르세요.</td></tr>
+    <tr><td>수식이 글자 그대로 보임</td><td>칸을 더블클릭하고 <kbd>Enter</kbd>. 서식이 "일반 텍스트"면 <span class="menu">서식</span> → <span class="menu">숫자</span> → <span class="menu">자동</span>.</td></tr>
+    <tr><td>QUERY 오류</td><td>수식 전체를 다시 복사해 붙이세요. 큰따옴표(")와 작은따옴표(')가 섞여 있어 일부만 지우면 깨집니다.</td></tr>
+    <tr><td>메뉴(검증·발주서)가 안 보임</td><td>시트를 <kbd>F5</kbd>로 새로고침하고 10초 기다립니다. 그래도 없으면 편집기에서 저장(💾)했는지 확인하세요.</td></tr>
+    <tr><td>8교시에 <span class="menu">발주서</span> 메뉴가 안 생김</td><td>발주서 파일을 저장(<kbd>Ctrl</kbd>+<kbd>S</kbd>)하지 않았거나, 시트를 <kbd>F5</kbd>로 새로고침하지 않았습니다. 그래도 없으면 발주서 코드를 처음부터 다시 복사해 붙여 넣으세요(일부만 붙으면 메뉴가 안 생깁니다).</td></tr>
+    <tr><td>"TypeError: Cannot read properties of null"</td><td>코드가 찾는 탭(계약, 발주서, 발주대상)이 없거나 이름이 다릅니다. 탭 이름을 확인하세요.</td></tr>
+    <tr><td>권한 창이 안 뜨고 멈춤</td><td>브라우저 팝업 차단을 풀고 다시 실행하세요. 구글 계정이 여러 개 로그인돼 있으면 시크릿 창에서 한 계정만 로그인해 보세요.</td></tr>
+  </table></div>
+  <div class="box note"><b>되돌리기</b><kbd>Ctrl</kbd>+<kbd>Z</kbd>로 안 되면 <span class="menu">파일</span> → <span class="menu">버전 기록</span> → <span class="menu">버전 기록 보기</span>에서 이전 시각으로 복원할 수 있습니다.</div>
+</section>
+
+</div>
+<footer>에듀에이드 AI+PBL · 스프레드시트 통합 DB로 만드는 수주·발주·대사 업무 AI 자동화 · 실습 데이터는 모두 가상·마스킹 값입니다</footer>
+<script src="assets/app.js"></script>
+</body>
+</html>
