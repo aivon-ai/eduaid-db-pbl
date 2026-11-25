@@ -7,29 +7,29 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/style.css?v=20261125b">
 </head>
 <body data-page="trainee">
 
 <nav class="top"><div class="in">
   <span class="logo">에듀에이드 PBL</span>
   <a href="#prep">준비</a>
-  <span class="grp">1회차 ▸</span>
-  <a href="#s-a1">A-1 사례</a>
+  <button type="button" class="grp" data-name="1회차" aria-controls="nav-r1" aria-expanded="true">1회차 ▾</button>
+  <span class="sub" id="nav-r1"><a href="#s-a1">A-1 사례</a>
   <a href="#s-a2">A-2 입력 횟수</a>
   <a href="#s-a3">A-3 차이 찾기</a>
   <a href="#s-a4">A-4 흐름도</a>
   <a href="#s-a4b">A-4+ AI 검산</a>
   <a href="#s-a5">A-5 대응표</a>
-  <a href="#s-a6">A-6 성공지표</a>
-  <span class="grp">2회차 ▸</span>
-  <a href="#d2-1">설계</a>
+  <a href="#s-a6">A-6 성공지표</a></span>
+  <button type="button" class="grp" data-name="2회차" aria-controls="nav-r2" aria-expanded="true">2회차 ▾</button>
+  <span class="sub" id="nav-r2"><a href="#d2-1">설계</a>
   <a href="#d2-3">적재</a>
   <a href="#d2-4">손익</a>
   <a href="#d2-5">조회 뷰</a>
   <a href="#d2-6">발주서</a>
   <a href="#d2-7">스크립트</a>
-  <a href="#d2-8">PDF</a>
+  <a href="#d2-8">PDF</a></span>
   <a href="#help">막힐 때</a>
   <a href="#mystatus" class="progress" id="progress" title="내 진행 상황 보기"><span class="pbar"><i></i></span><b>0%</b></a>
 </div></nav>
@@ -912,6 +912,6 @@ function saveBatchPdf() {
 
 </div>
 <footer>에듀에이드 AI+PBL · 스프레드시트 통합 DB로 만드는 수주·발주·대사 업무 AI 자동화 · 실습 데이터는 모두 가상·마스킹 값입니다</footer>
-<script src="assets/app.js?v=20261125"></script>
+<script src="assets/app.js?v=20261125b"></script>
 </body>
 </html>

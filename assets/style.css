@@ -17,6 +17,10 @@ a{color:var(--brand)}
 .top a{text-decoration:none;color:var(--sub);font-size:14px;padding:4px 8px;border-radius:8px}
 .top a:hover{background:var(--brand-soft);color:var(--brand)}
 .top .grp{font-size:13px;font-weight:700;color:var(--ink,#333);margin-left:6px;padding-left:10px;border-left:1px solid var(--line,#ddd)}
+.top button.grp{font:inherit;font-size:13px;font-weight:700;color:var(--ink,#333);background:none;border:0;border-left:1px solid var(--line,#ddd);margin-left:6px;padding:4px 8px 4px 10px;cursor:pointer;white-space:nowrap;border-radius:0}
+.top button.grp:hover{color:var(--brand)}
+.top .sub{display:contents}
+.top .sub.closed{display:none}
 .wrap{max-width:1080px;margin:0 auto;padding:0 16px}
 .hero{padding:36px 0 18px}
 .hero .eyebrow{color:var(--brand);font-weight:700;font-size:14px}

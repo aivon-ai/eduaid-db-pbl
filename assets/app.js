@@ -101,6 +101,21 @@
   });
   render();
 
+  // 위쪽 메뉴: "1회차 ▾ / 2회차 ▾"를 누르면 그 회차 메뉴가 접히고 펼쳐진다 (이 브라우저에 기억)
+  (function () {
+    var NK = 'eduaid-nav-closed-' + (document.body.dataset.page || 'page');
+    var closed = {}; try { closed = JSON.parse(localStorage.getItem(NK) || '{}') || {}; } catch (e) { closed = {}; }
+    document.querySelectorAll('.top button.grp').forEach(function (b) {
+      var sub = document.getElementById(b.getAttribute('aria-controls')); if (!sub) return;
+      var name = b.dataset.name;
+      function paint() { var c = !!closed[sub.id]; sub.classList.toggle('closed', c);
+        b.setAttribute('aria-expanded', c ? 'false' : 'true'); b.textContent = name + (c ? ' ▸' : ' ▾'); }
+      b.addEventListener('click', function () { closed[sub.id] = !closed[sub.id];
+        try { localStorage.setItem(NK, JSON.stringify(closed)); } catch (e) {} paint(); });
+      paint();
+    });
+  })();
+
   // 새로고침해도 보던 자리 그대로 (이 탭 안에서만 기억)
   (function () {
     var SK = 'eduaid-scroll-' + location.pathname;
