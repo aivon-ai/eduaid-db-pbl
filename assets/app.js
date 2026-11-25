@@ -42,11 +42,22 @@
     groups.push({ id: sec.id, label: label, steps: ss });
   });
   var panel = document.getElementById('progress-panel');
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (err) {} }
   if (panel) groups.forEach(function (g) {
+    var line = document.createElement('div'); line.className = 'pp-line';
     var row = document.createElement('a'); row.className = 'pp-row'; row.href = '#' + g.id;
     row.innerHTML = '<span class="pp-label"></span><span class="pp-bar"><i></i></span><span class="pp-num"></span>';
     row.querySelector('.pp-label').textContent = g.label;
-    panel.appendChild(row); g.row = row;
+    // 교시 전체를 한 번에 체크/해제 (다른 컴퓨터로 옮겼을 때 지난 회차를 빠르게 채우는 용도)
+    var all = document.createElement('button'); all.type = 'button'; all.className = 'pp-all';
+    all.addEventListener('click', function () {
+      var full = true; g.steps.forEach(function (s) { if (!state[s.dataset.id]) full = false; });
+      if (full && !window.confirm('"' + g.label + '"의 완료 체크를 모두 지울까요?')) return;
+      g.steps.forEach(function (s) { state[s.dataset.id] = !full; });
+      save(); render();
+    });
+    line.appendChild(row); line.appendChild(all);
+    panel.appendChild(line); g.row = row; g.all = all;
   });
 
   function render() {
@@ -68,6 +79,7 @@
       g.row.querySelector('.pp-bar i').style.width = gp + '%';
       g.row.querySelector('.pp-num').textContent = d + ' / ' + g.steps.length;
       g.row.classList.toggle('full', d === g.steps.length);
+      if (g.all) g.all.textContent = d === g.steps.length ? '체크 지우기' : '✔ 모두 완료';
     });
   }
 
@@ -84,8 +96,7 @@
     s.appendChild(lab);
     lab.querySelector('input').addEventListener('change', function (e) {
       state[s.dataset.id] = e.target.checked;
-      try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (err) {}
-      render();
+      save(); render();
     });
   });
   render();

@@ -74,6 +74,9 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
 .pp-total-txt{font-weight:700;font-size:14px;white-space:nowrap;font-variant-numeric:tabular-nums}
 .pp-row{display:grid;grid-template-columns:150px 1fr 56px;gap:12px;align-items:center;padding:5px 6px;border-radius:8px;text-decoration:none;color:var(--ink);font-size:14px}
 .pp-row:hover{background:var(--brand-soft)}
+.pp-line{display:grid;grid-template-columns:1fr 92px;gap:8px;align-items:center}
+.pp-all{font:inherit;font-size:12px;font-weight:700;border:1px solid var(--line);background:#fff;color:var(--brand);border-radius:8px;padding:4px 6px;cursor:pointer;white-space:nowrap}
+.pp-all:hover{background:var(--brand-soft)}
 .pp-bar{height:10px;border-radius:99px;background:#e6eaf0;overflow:hidden}
 .pp-num{text-align:right;color:var(--sub);font-variant-numeric:tabular-nums;font-size:13px}
 .pp-row.full .pp-bar i{background:var(--ok)}
