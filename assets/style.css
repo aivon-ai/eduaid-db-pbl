@@ -98,6 +98,10 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
 .timeline li span:first-child{font-variant-numeric:tabular-nums;color:var(--brand);font-weight:700;font-size:14px}
 details{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:10px 0;background:#fff}
 details summary{cursor:pointer;font-weight:700}
+details.answer{border:2px dashed #b9a6e8;background:#faf8ff}
+details.answer summary{color:#3b2690}
+details.answer[open]{border-style:solid}
+details.answer .tbl{margin-top:8px}
 .flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:10px 0}
 .flow span{background:var(--brand-soft);color:var(--brand);border-radius:8px;padding:4px 10px;font-weight:700;font-size:14px}
 .flow i{font-style:normal;color:var(--sub)}
