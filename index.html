@@ -14,7 +14,14 @@
 <nav class="top"><div class="in">
   <span class="logo">에듀에이드 PBL</span>
   <a href="#prep">준비</a>
-  <a href="#d1-7">1회차 문제정의</a>
+  <span class="grp">1회차 ▸</span>
+  <a href="#s-a1">A-1 사례</a>
+  <a href="#s-a2">A-2 입력 횟수</a>
+  <a href="#s-a3">A-3 차이 찾기</a>
+  <a href="#s-a4">A-4 흐름도</a>
+  <a href="#s-a4b">A-4+ AI 검산</a>
+  <a href="#s-a5">A-5 대응표</a>
+  <a href="#s-a6">A-6 성공지표</a>
   <span class="grp">2회차 ▸</span>
   <a href="#d2-1">설계</a>
   <a href="#d2-3">적재</a>
@@ -107,7 +114,7 @@
       <tr><td>A-6</td><td>A28 성공지표</td><td>강사 화면 (강사가 같은 표에 반 대표값을 적음)</td></tr>
     </table></div></div>
 
-  <div class="step" data-id="a1">
+  <div class="step" data-id="a1" id="s-a1">
     <h3><span class="no">A-1</span>계약 한 건이 지나가는 길 따라가기</h3>
     <p class="goal">🎯 계약 하나가 수주부터 정산까지 어느 시트를 거치는지, 어디서 끊기는지 봅니다. 4~6교시(L3-2)에 <b>사례A(2026-09-001)</b>는 한 번 따라가 봤습니다. 오늘은 사례A를 빠르게 확인하고, <b>문제가 생긴 사례 B·C·D</b>에 집중합니다.</p>
     <div class="where"><div>✏️ <b>적는 곳:</b> As-Is 파일 › <code class="i">문제정의</code> 탭 › A1</div><div>👀 <b>보는 곳:</b> As-Is 파일 › <code class="i">한건추적</code> 탭</div></div>
@@ -134,7 +141,7 @@
     <div class="box note"><b>💡 볼 곳</b>같은 계약 한 건인데 <b>키</b> 칸의 번호가 계약번호(영업) → 삼성주문번호 → 매입ID(회계) → 다시 삼성주문번호(명세서) → 계산서번호(정산)로 계속 바뀝니다. 이어달리기에서 주자가 바뀌는 것과 같습니다. 바뀔 때 <b>이전 번호와 새 번호를 한 줄에 같이 적어 두는 것이 바통</b>입니다. 새 기록에 이전 번호를 안 적으면 바통을 떨어뜨린 것이라, 그다음 단계에서는 이 계약이 어느 줄인지 찾을 수 없습니다. 그래서 번호가 바뀌는 곳이 <b>끊기기 쉬운 곳</b>입니다.</div>
   </div>
 
-  <div class="step" data-id="a2">
+  <div class="step" data-id="a2" id="s-a2">
     <h3><span class="no">A-2</span>AI 답 확인하기: 같은 값을 몇 번 다시 쓰나</h3>
     <p class="goal">🎯 4~6교시(L3-2)에 AI가 열 이름만 보고 "계약금액을 여러 시트에 다시 입력한다"고 <b>추측</b>했습니다. 그 답이 진짜인지, <b>계약금액</b> 하나가 몇 개 시트에 손으로 다시 입력되는지 실제 시트를 열어 확인합니다. L3-2에서 받은 AI 답이 있으면 옆에 띄워 두세요.</p>
     <div class="where"><div>✏️ <b>적는 곳:</b> As-Is 파일 › <code class="i">문제정의</code> 탭 › A8</div><div>👀 <b>보는 곳:</b> As-Is 파일 › <code class="i">1_</code>~<code class="i">4_</code> 탭 4개의 1행 제목</div></div>
@@ -155,7 +162,7 @@
     <div class="box ok"><b>✅ 이렇게 나오면 성공</b>네 줄 모두 두 칸이 채워져 있고, 네 시트 모두에 계약금액이 다시 들어가 있습니다. 계약을 부르는 번호는 시트마다 다릅니다. <b>같은 값을 4번 입력</b>하고 있다는 것이 오늘 풀 문제입니다.</div>
   </div>
 
-  <div class="step" data-id="a3">
+  <div class="step" data-id="a3" id="s-a3">
     <h3><span class="no">A-3</span>숨어 있는 차이·누락 찾기</h3>
     <p class="goal">🎯 4번씩 손으로 쓰다 보니 생긴 <b>차이</b>(같은 계약인데 금액이 다름)와 <b>누락</b>(있어야 할 기록이 없음)을 수식으로 찾아냅니다.</p>
     <div class="where"><div>✏️ <b>적는 곳:</b> 수식은 As-Is 파일의 <code class="i">2_</code>·<code class="i">3_</code>·<code class="i">4_</code>·<code class="i">정산</code> 탭, 찾은 것은 As-Is 파일 › <code class="i">문제정의</code> 탭 › G1</div><div>👀 <b>보는 곳:</b> 수식을 넣은 열 (<code class="i">2_</code> G열, <code class="i">3_</code> C열, <code class="i">4_</code> F열, <code class="i">정산</code> I열)</div></div>
@@ -219,7 +226,7 @@
   <h2>1회차 8교시 · 문제 찾기 ② 업무 흐름도와 키 정리, 성공지표</h2>
   <div class="meta">17:00~18:00 · 오늘 만든 것이 2회차 설계의 출발점입니다</div>
 
-  <div class="step" data-id="a4">
+  <div class="step" data-id="a4" id="s-a4">
     <h3><span class="no">A-4</span>업무 흐름도 v0.1</h3>
     <p class="goal">🎯 우리 회사 일이 어떤 순서로, 어떤 시트에서, 누구 손으로 흘러가는지 한 장으로 정리합니다.</p>
     <div class="where"><div>✏️ <b>적는 곳:</b> As-Is 파일 › <code class="i">문제정의</code> 탭 › A15</div><div>👀 <b>보는 곳:</b> As-Is 파일 › <code class="i">한건추적</code> 탭 D열 "키"</div></div>
@@ -243,7 +250,7 @@
     <div class="box note"><b>💡 팁</b>표의 단계·하는 일·담당은 그대로 둡니다. 오늘 채울 곳은 맨 오른쪽 <b>"이때 쓰는 번호"</b> 칸뿐입니다. 이 표는 다음 단계(A-4+)에서 Claude에게 그대로 보여 줍니다.</div>
   </div>
 
-  <div class="step" data-id="a4b">
+  <div class="step" data-id="a4b" id="s-a4b">
     <h3><span class="no">A-4+</span>Claude로 내 흐름도 검산하기</h3>
     <p class="goal">🎯 A-3에서 수식으로 검산했듯, 이번에는 AI로 내 흐름도의 "이때 쓰는 번호" 칸을 검산합니다. 번호가 몇 번 바뀌는지 한 줄로 확인합니다.</p>
     <div class="where"><div>✏️ <b>적는 곳:</b> As-Is 파일 › <code class="i">문제정의</code> 탭 › A35</div><div>👀 <b>보는 곳:</b> Claude 답 + <code class="i">문제정의</code> 탭 흐름도의 번호 칸(E15~E19)</div></div>
@@ -272,7 +279,7 @@
     <div class="box note"><b>💡 X가 나오면</b>내가 번호 칸을 잘못 적었거나, AI가 잘못 읽은 것입니다. <code class="i">한건추적</code> 탭 D열 "키"를 다시 보고 누가 맞는지 확인합니다. 내 칸이 틀렸으면 고치고, AI가 틀렸으면 그대로 두고 X 옆에 "AI가 잘못 읽음"이라고 적습니다. AI 답도 내가 확인한다는 습관은 2회차 B-2·B-3에서 그대로 씁니다.</div>
   </div>
 
-  <div class="step" data-id="a5">
+  <div class="step" data-id="a5" id="s-a5">
     <h3><span class="no">A-5</span>키 대응표와 용어 정리표</h3>
     <p class="goal">🎯 영업이 부르는 번호와 회계가 부르는 번호를 어떻게 이을지 적습니다.</p>
     <div class="where"><div>✏️ <b>적는 곳:</b> As-Is 파일 › <code class="i">문제정의</code> 탭 › A41</div><div>👀 <b>보는 곳:</b> <b>PBL 샘플 데이터 사본</b> › <code class="i">계약</code>·<code class="i">매입_지출시트</code>·<code class="i">삼성명세서</code> 탭</div><div class="sw">⚠ 파일이 바뀝니다. 브라우저 탭 두 개를 열어 두고, PBL 샘플에서 보고 As-Is 파일에 적습니다. 빈칸 세는 수식은 PBL 샘플 쪽 탭에 넣습니다.</div></div>
@@ -306,7 +313,7 @@
     <div class="box ok"><b>✅ 이렇게 나오면 성공</b>키 대응표 네 줄의 "답"이 모두 채워져 있습니다. 용어표 <b>인도처 코드·미매칭 두 줄의 "뜻"</b>이 채워져 있습니다. (미매칭의 "쓰는 시트"를 채운다면 <code class="i">아직 없음(3회차)</code>.) 두 번째·세 번째 질문의 개수가 <b>서로 다르게</b> 나왔다면 제대로 찾은 것입니다.</div>
   </div>
 
-  <div class="step" data-id="a6">
+  <div class="step" data-id="a6" id="s-a6">
     <h3><span class="no">A-6</span>성공지표 정하기</h3>
     <p class="goal">🎯 3회차에 "얼마나 좋아졌나"를 말할 수 있도록 지금 모습을 적어 둡니다. 시간을 정확히 잴 필요는 없습니다. <b>체감</b>이면 충분합니다.</p>
     <div class="where"><div>✏️ <b>적는 곳:</b> As-Is 파일 › <code class="i">문제정의</code> 탭 › A28</div><div>👀 <b>보는 곳:</b> 강사 화면 — 강사가 자기 시트의 같은 표(문제정의 탭 A28)에 반 전체가 정한 값을 적어 보여 줍니다</div></div>
@@ -905,6 +912,6 @@ function saveBatchPdf() {
 
 </div>
 <footer>에듀에이드 AI+PBL · 스프레드시트 통합 DB로 만드는 수주·발주·대사 업무 AI 자동화 · 실습 데이터는 모두 가상·마스킹 값입니다</footer>
-<script src="assets/app.js"></script>
+<script src="assets/app.js?v=20261125"></script>
 </body>
 </html>

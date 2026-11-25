@@ -100,4 +100,18 @@
     });
   });
   render();
+
+  // 새로고침해도 보던 자리 그대로 (이 탭 안에서만 기억)
+  (function () {
+    var SK = 'eduaid-scroll-' + location.pathname;
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    function keep() { try { sessionStorage.setItem(SK, String(window.scrollY)); } catch (e) {} }
+    window.addEventListener('beforeunload', keep); window.addEventListener('pagehide', keep);
+    window.addEventListener('load', function () {
+      var y = null; try { y = sessionStorage.getItem(SK); } catch (e) {}
+      if (y === null) return;
+      var h = document.documentElement; h.style.scrollBehavior = 'auto';
+      window.scrollTo(0, +y); setTimeout(function () { window.scrollTo(0, +y); h.style.scrollBehavior = ''; }, 50);
+    });
+  })();
 })();
