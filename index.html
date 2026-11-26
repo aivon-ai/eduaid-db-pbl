@@ -187,17 +187,17 @@
     <h3><span class="no">A-3</span>숨어 있는 차이·누락 찾기</h3>
     <p class="goal">🎯 4번씩 손으로 쓰다 보니 생긴 <b>차이</b>(같은 계약인데 금액이 다름)와 <b>누락</b>(있어야 할 기록이 없음)을 수식으로 찾아냅니다.</p>
     <div class="where"><div>✏️ <b>적는 곳:</b> 수식은 As-Is 파일의 <code class="i">2_</code>·<code class="i">3_</code>·<code class="i">4_</code>·<code class="i">정산</code> 탭, 찾은 것은 As-Is 파일 › <code class="i">문제정의</code> 탭 › G1</div><div>👀 <b>보는 곳:</b> 수식을 넣은 열 (<code class="i">2_</code> G열, <code class="i">3_</code> C열, <code class="i">4_</code> F열, <code class="i">정산</code> I열)</div></div>
-    <p><b>① 주문현황과 계약별손익의 금액 비교</b> — <code class="i">2_계약별손익(회계)</code> 탭 G1에 <code class="i">차이</code>라고 쓰고, G2에 아래 수식을 넣은 뒤 G41까지 채웁니다. (G2 칸 오른쪽 아래 작은 네모를 더블클릭)</p>
-    <div class="code"><div class="cap"><span>2_계약별손익(회계) G2</span><button class="copy">복사</button></div><pre>=D2-'1_주문현황(영업)'!G2</pre></div>
-    <p><b>② 매출처 월합계가 맞는지</b> — <code class="i">3_매출처·매입처(월합계)</code> 탭 C1에 <code class="i">차이</code>라고 쓰고, C2에 아래 수식을 넣어 C13까지 채웁니다.</p>
-    <div class="code"><div class="cap"><span>3_매출처·매입처(월합계) C2</span><button class="copy">복사</button></div><pre>=SUMIFS('1_주문현황(영업)'!G:G,'1_주문현황(영업)'!C:C,A2)-B2</pre></div>
-    <p><b>③·④를 하기 전에: 정산 탭 가져오기</b> — 현금흐름표는 <b>정산</b> 기록과 비교해야 하는데, 정산 탭은 PBL 샘플 데이터 파일에 있습니다. 탭을 복사해 옵니다.</p>
+    <p><b>먼저: 정산 탭 가져오기</b> — 수식을 넣기 전에 준비부터 합니다. ③·④에서 현금흐름표는 <b>정산</b> 기록과 비교해야 하는데, 정산 탭은 PBL 샘플 데이터 파일에 있습니다. 탭을 복사해 옵니다.</p>
     <ol>
       <li><b>PBL 샘플 데이터 사본</b>을 엽니다.</li>
       <li>아래쪽 <code class="i">정산</code> 탭을 마우스 오른쪽 버튼으로 클릭 → <span class="menu">복사 대상</span> → <span class="menu">기존 스프레드시트</span>.</li>
       <li>목록에서 As-Is 파일, 즉 이름이 <code class="i">에듀에이드_AsIs시트_2026-09_참여자용의 사본</code>인 파일을 골라 <span class="menu">삽입</span>. (안 보이면 위쪽 검색칸에 <code class="i">AsIs</code> 입력)</li>
       <li>As-Is 파일로 돌아오면 <code class="i">정산의 사본</code> 탭이 생겨 있습니다. 이름을 더블클릭해 <code class="i">정산</code>으로 바꿉니다.</li>
     </ol>
+    <p><b>① 주문현황과 계약별손익의 금액 비교</b> — <code class="i">2_계약별손익(회계)</code> 탭 G1에 <code class="i">차이</code>라고 쓰고, G2에 아래 수식을 넣은 뒤 G41까지 채웁니다. (G2 칸 오른쪽 아래 작은 네모를 더블클릭)</p>
+    <div class="code"><div class="cap"><span>2_계약별손익(회계) G2</span><button class="copy">복사</button></div><pre>=D2-'1_주문현황(영업)'!G2</pre></div>
+    <p><b>② 매출처 월합계가 맞는지</b> — <code class="i">3_매출처·매입처(월합계)</code> 탭 C1에 <code class="i">차이</code>라고 쓰고, C2에 아래 수식을 넣어 C13까지 채웁니다.</p>
+    <div class="code"><div class="cap"><span>3_매출처·매입처(월합계) C2</span><button class="copy">복사</button></div><pre>=SUMIFS('1_주문현황(영업)'!G:G,'1_주문현황(영업)'!C:C,A2)-B2</pre></div>
     <p><b>③ 현금흐름표 입금액이 정산과 같은지</b> — <code class="i">4_현금흐름표</code> 탭 F1에 <code class="i">차이</code>라고 쓰고, F2에 아래 수식을 넣은 뒤 F66까지 채웁니다. 입금 줄만 계산하고 출금예정 줄은 빈칸으로 둡니다.</p>
     <div class="code"><div class="cap"><span>4_현금흐름표 F2</span><button class="copy">복사</button></div><pre>=IF(B2&lt;&gt;"입금","",D2-XLOOKUP(SUBSTITUTE(E2,"계산서 ",""),정산!A:A,정산!F:F))</pre></div>
     <p><b>④ 정산에 있는 입금이 현금흐름표에 빠지지 않았는지</b> — <code class="i">정산</code> 탭 I1에 <code class="i">현금흐름표에 있나</code>라고 쓰고, I2에 아래 수식을 넣은 뒤 I41까지 채웁니다. 입금이 없는 계산서는 빈칸으로 둡니다.</p>
