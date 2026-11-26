@@ -101,17 +101,17 @@
   });
   render();
 
-  // 위쪽 메뉴: "1회차 ▾ / 2회차 ▾"를 누르면 그 회차 메뉴가 접히고 펼쳐진다 (이 브라우저에 기억)
+  // 위쪽 메뉴: "1회차 ▸ / 2회차 ▸"는 처음에 접혀 있고, 한 번 누르면 펼치고 또 누르면 접는다 (이 브라우저에 기억)
   (function () {
-    var NK = 'eduaid-nav-closed-' + (document.body.dataset.page || 'page');
-    var closed = {}; try { closed = JSON.parse(localStorage.getItem(NK) || '{}') || {}; } catch (e) { closed = {}; }
+    var NK = 'eduaid-nav-open-' + (document.body.dataset.page || 'page');
+    var open = {}; try { open = JSON.parse(localStorage.getItem(NK) || '{}') || {}; } catch (e) { open = {}; }
     document.querySelectorAll('.top button.grp').forEach(function (b) {
       var sub = document.getElementById(b.getAttribute('aria-controls')); if (!sub) return;
       var name = b.dataset.name;
-      function paint() { var c = !!closed[sub.id]; sub.classList.toggle('closed', c);
+      function paint() { var c = !open[sub.id]; sub.classList.toggle('closed', c);
         b.setAttribute('aria-expanded', c ? 'false' : 'true'); b.textContent = name + (c ? ' ▸' : ' ▾'); }
-      b.addEventListener('click', function () { closed[sub.id] = !closed[sub.id];
-        try { localStorage.setItem(NK, JSON.stringify(closed)); } catch (e) {} paint(); });
+      b.addEventListener('click', function () { open[sub.id] = !open[sub.id];
+        try { localStorage.setItem(NK, JSON.stringify(open)); } catch (e) {} paint(); });
       paint();
     });
   })();
