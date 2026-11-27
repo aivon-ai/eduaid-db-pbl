@@ -829,7 +829,7 @@
       <li><b>PBL 샘플 데이터 사본</b>에서 <span class="menu">확장 프로그램</span> → <span class="menu">Apps Script</span>. 새 탭에 글 쓰는 화면(편집기)이 열립니다.</li>
       <li>왼쪽 위 "제목 없는 프로젝트"를 눌러 <code class="i">통합DB 자동화</code>로 바꿉니다.</li>
       <li>가운데 화면을 클릭 → <kbd>Ctrl</kbd>+<kbd>A</kbd>(전부 선택) → <kbd>Delete</kbd>.</li>
-      <li>아래 <span class="menu">복사</span> 버튼 → 가운데 화면에 <kbd>Ctrl</kbd>+<kbd>V</kbd> → <kbd>Ctrl</kbd>+<kbd>S</kbd>(저장).</li>
+      <li>아래 <span class="menu">복사</span> 버튼 → 가운데 화면에 <kbd>Ctrl</kbd>+<kbd>V</kbd> → <kbd>Ctrl</kbd>+<kbd>S</kbd>(저장). 저장은 위쪽의 <b>💾 단추</b>를 눌러도 됩니다.</li>
     </ol>
     <div class="code"><div class="cap"><span>Code.gs · 메뉴 만들기 + 계약 입력 검사 + 변경 로그</span><button class="copy">복사</button></div><pre>// 시트를 열 때마다 메뉴를 만든다
 // 코드 파일이 준비된 메뉴만 보인다 (발주서는 8교시, 대사는 3회차에 저절로 생김)
@@ -905,10 +905,16 @@ function onEdit(e) {
 
   <div class="step" data-id="g3">
     <h3><span class="no">G-3</span>로봇 처음 움직이기 (허락해 주기)</h3>
+    <div class="box note"><b>💡 왜 새로고침(F5)을 할까요?</b>
+      붙여 넣은 코드에는 "<b>시트를 열 때</b> 메뉴를 만들어라"라고 적혀 있습니다(<code class="i">onOpen</code> = 열 때).
+      그런데 지금 시트는 쪽지를 붙이기 <b>전부터 열려 있었습니다.</b> 그래서 로봇은 아직 메뉴를 만들 기회가 없었습니다.
+      <kbd>F5</kbd>를 누르면 시트가 <b>다시 열리고</b>, 그 순간 로봇이 쪽지를 읽어 <span class="menu">검증</span> 메뉴를 만듭니다.
+      가게에 새 간판 안내를 붙여도 <b>다음에 문을 열 때</b> 간판 불이 켜지는 것과 같습니다.<br>
+      먼저 편집기에서 <b>저장</b>했는지 확인하세요. 저장하지 않으면 새로고침해도 메뉴가 생기지 않습니다. 메뉴는 몇 초 늦게 나타날 수 있습니다.</div>
     <ol>
-      <li>시트 탭으로 돌아와 <kbd>F5</kbd>(새로고침). 몇 초 뒤 위 메뉴줄 끝에 <span class="menu">검증</span>이 생깁니다.</li>
+      <li><b>구글 시트</b> 탭(편집기 말고)으로 돌아와 <kbd>F5</kbd>(새로고침). 몇 초 뒤 <b>구글 시트 맨 위 메뉴 줄</b>의 <span class="menu">도움말</span> <b>오른쪽</b>에 <span class="menu">검증</span>이 생깁니다.</li>
       <li><span class="menu">검증</span> → <span class="menu">계약 입력 검사</span>.</li>
-      <li>"승인 필요" 창 → <span class="menu">확인</span>(또는 권한 검토) → 내 계정.</li>
+      <li><b>"승인 필요"</b> 창이 뜨고 <b>"이 문서에 첨부된 스크립트를 실행하려면 사용자의 허가가 필요합니다."</b>라고 적혀 있습니다. 정상입니다. <span class="menu">확인</span>(또는 권한 검토) → 내 계정.</li>
       <li>"Google에서 확인하지 않은 앱" → 왼쪽 아래 <span class="menu">고급</span> → <span class="menu">통합DB 자동화(으)로 이동(안전하지 않음)</span>.</li>
       <li><span class="menu">허용</span> (네모 칸이 있으면 <b>모두 선택</b> 후 <span class="menu">계속</span>).</li>
       <li>다시 <span class="menu">검증</span> → <span class="menu">계약 입력 검사</span>.</li>
@@ -942,9 +948,12 @@ function onEdit(e) {
     <h3><span class="no">G-6</span>오류가 나면 AI에게 보여 주기 (연습)</h3>
     <p class="goal">🎯 오류는 실패가 아닙니다. AI에게 보여 주면 고치는 법을 알려 줍니다.</p>
     <ol>
-      <li>편집기에서 <code class="i">getSheetByName('계약')</code>의 <code class="i">'계약'</code>을 <code class="i">'계약서'</code>로 바꾸고 <kbd>Ctrl</kbd>+<kbd>S</kbd>. (일부러 틀리게)</li>
+      <li><b>Apps Script 편집기</b>에서 <code class="i">getSheetByName('계약')</code>의 <code class="i">'계약'</code>을 <code class="i">'계약서'</code>로 바꾸고 <kbd>Ctrl</kbd>+<kbd>S</kbd>. (일부러 틀리게)</li>
       <li>시트에서 <span class="menu">검증</span> → <span class="menu">계약 입력 검사</span>. 오류 글이 뜹니다.</li>
-      <li>아래 글에 오류 내용을 넣어 Claude에 보냅니다.</li>
+      <li>아래 <b>요청 틀</b>을 복사해 Claude에 붙여 넣습니다. <b>아직 보내지 않습니다.</b></li>
+      <li><span class="menu">오류 메시지</span> 자리의 괄호를 지우고 시트에 뜬 오류 글을 붙여 넣습니다.</li>
+      <li><b>Apps Script 편집기</b>에서 코드 화면을 클릭 → <kbd>Ctrl</kbd>+<kbd>A</kbd> → <kbd>Ctrl</kbd>+<kbd>C</kbd>.</li>
+      <li>Claude로 돌아와 맨 아래 <code class="i">(여기에 코드 전체 붙여 넣기)</code> 자리를 지우고 <kbd>Ctrl</kbd>+<kbd>V</kbd>, 그다음 보냅니다.</li>
       <li>알려 준 대로 고치고 다시 실행합니다.</li>
     </ol>
     <div class="code"><div class="cap"><span>오류 수정 요청 틀</span><button class="copy">복사</button></div><pre>Apps Script를 실행했더니 오류가 납니다.
@@ -952,7 +961,11 @@ function onEdit(e) {
 실행한 메뉴: 검증 > 계약 입력 검사
 기대한 결과: 계약 탭을 검사해서 검증결과 탭에 문제를 적어야 합니다.
 시트 탭 이름: README, 계약, 거래처, 매입_지출시트, 삼성명세서, 정산 (그 밖에 내가 만든 탭: 점검, 조회뷰, 발주서 등)
-원인과 고친 코드를 알려 주고, 고친 부분이 무엇인지 쉬운 말로 설명해 주세요.</pre></div>
+원인과 고쳐야 할 줄을 알려 주고, 고친 부분이 무엇인지 쉬운 말로 설명해 주세요.
+
+코드:
+(여기에 코드 전체 붙여 넣기)</pre></div>
+    <div class="box note"><b>💡 왜 코드도 보내나요?</b>AI는 내 화면을 볼 수 없습니다. 오류 글만 보내면 짐작해야 하지만, <b>코드까지 보내면</b> 어느 줄을 고칠지 짚어 줄 수 있습니다. 이 코드에는 탭 이름과 일하는 방법만 있고 금액이나 계좌 같은 값은 없습니다.</div>
     <div class="box ok"><b>✅ 7교시 끝</b>다시 "문제가 없습니다."가 나오고, 검증 메뉴·문제 2건 찾기·변경로그 한 줄까지 해 봤습니다.</div>
   </div>
 </section>
@@ -966,7 +979,7 @@ function onEdit(e) {
     <h3><span class="no">H-1</span>두 번째 쪽지 붙이기 (발주서 파일)</h3>
     <ol>
       <li>편집기 왼쪽 <b>파일</b> 옆 <span class="menu">＋</span> → <span class="menu">스크립트</span> → 이름 <code class="i">발주서</code> → <kbd>Enter</kbd>.</li>
-      <li>새 파일에 있던 글을 지우고, 아래 코드를 붙여 넣은 뒤 <kbd>Ctrl</kbd>+<kbd>S</kbd>.</li>
+      <li>새 파일에 있던 글을 지우고, 아래 코드를 붙여 넣은 뒤 <kbd>Ctrl</kbd>+<kbd>S</kbd> (또는 위쪽의 <b>💾 단추</b>).</li>
       <li>시트 탭으로 돌아와 <kbd>F5</kbd>.</li>
     </ol>
     <div class="box warn"><b>⚠ 꼭 새 파일에 붙입니다</b>7교시의 <code class="i">Code.gs</code>는 건드리지 않습니다.</div>
