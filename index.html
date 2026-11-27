@@ -722,13 +722,21 @@
     <div class="code"><div class="cap"><span>점검 B10 · 계약금액 합계 (나와야 할 값 293,564,000)</span><button class="copy">복사</button></div><pre>=SUM(계약!J2:J41)</pre></div>
     <div class="code"><div class="cap"><span>점검 B11 · 매입금액 합계 (나와야 할 값 257,000,900)</span><button class="copy">복사</button></div><pre>=SUM(계약!O2:O41)</pre></div>
     <div class="code"><div class="cap"><span>점검 B12 · 손익 합계 (나와야 할 값 36,563,100)</span><button class="copy">복사</button></div><pre>=SUM(계약!P2:P41)</pre></div>
-    <p>② 창고를 바꾸면 진열창이 바뀌는지 봅니다.</p>
+    <p>② 창고를 바꾸면 진열창이 바뀌는지 봅니다. 탭을 오가며 숫자를 외우지 않도록 <b>점검 탭에서 한눈에</b> 봅니다.</p>
+    <p><code class="i">점검</code> 탭 <b>B13</b>에 아래 수식을 넣습니다. <code class="i">조회뷰</code>의 매입금액을 모두 더해 보여 주는 칸입니다. 처음에는 B11과 같은 <b>257,000,900</b>입니다.</p>
+    <div class="code"><div class="cap"><span>점검 B13 · 조회뷰 매입금액 합계</span><button class="copy">복사</button></div><pre>=SUM(조회뷰!C2:C13)</pre></div>
     <ol>
-      <li><code class="i">매입_지출시트</code> <b>H2</b>를 아무 숫자로 바꿉니다.</li>
-      <li><code class="i">조회뷰</code>와 <code class="i">매입처뷰</code> 숫자가 바뀌는지 봅니다. (피벗은 몇 초 걸립니다)</li>
-      <li><kbd>Ctrl</kbd>+<kbd>Z</kbd>로 되돌립니다.</li>
+      <li><code class="i">매입_지출시트</code> 탭 <b>H2</b>에 <code class="i">0</code>을 쓰고 <kbd>Enter</kbd>.</li>
+      <li><code class="i">점검</code> 탭으로 가서 아래 표와 비교합니다.</li>
+      <li><code class="i">매입_지출시트</code> 탭으로 돌아가 <kbd>Ctrl</kbd>+<kbd>Z</kbd>. 점검 탭 숫자가 "바꾸기 전"으로 돌아오면 끝입니다.</li>
     </ol>
-    <div class="box ok"><b>✅ 5교시 끝</b>합계가 맞고, 원본을 고치니 표가 따라 바뀌었습니다. <b>적는 곳은 하나, 보는 곳은 여러 개</b>입니다.</div>
+    <div class="tbl"><table>
+      <tr><th>점검 칸</th><th>무엇</th><th class="num">바꾸기 전</th><th class="num">H2를 0으로 바꾼 뒤</th></tr>
+      <tr><td>B11</td><td>계약 탭 매입금액 합계</td><td class="num">257,000,900</td><td class="num"><b>252,523,200</b></td></tr>
+      <tr><td>B12</td><td>손익 합계</td><td class="num">36,563,100</td><td class="num"><b>41,040,800</b></td></tr>
+      <tr><td>B13</td><td>조회뷰 매입금액 합계</td><td class="num">257,000,900</td><td class="num"><b>252,523,200</b></td></tr>
+    </table></div>
+    <div class="box ok"><b>✅ 5교시 끝</b>매입_지출시트 한 칸만 고쳤는데 B11·B12·B13이 모두 바뀌었습니다. <b>적는 곳은 하나, 보는 곳은 여러 개</b>입니다.</div>
   </div>
 
   <div class="step" data-id="e4">
